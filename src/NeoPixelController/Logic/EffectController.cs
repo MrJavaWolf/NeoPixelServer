@@ -40,7 +40,7 @@ namespace NeoPixelController.Logic
         {
             return effects;
         }
- 
+
         private void UpdateTime()
         {
             if (!stopwatch.IsRunning)
@@ -51,8 +51,11 @@ namespace NeoPixelController.Logic
             }
             else
             {
-                time.DeltaTime = stopwatch.ElapsedMilliseconds - time.Time;
-                time.Time = stopwatch.ElapsedMilliseconds;
+                var eclipsedMilliseconds = stopwatch.ElapsedMilliseconds;
+                //eclipsedMilliseconds = Math.Min(eclipsedMilliseconds - time.Time, time.Time + 16);
+                time.DeltaTime = eclipsedMilliseconds - time.Time;
+                time.Time = eclipsedMilliseconds;
+                Console.WriteLine("time.DeltaTime: "+ time.DeltaTime);
             }
         }
     }

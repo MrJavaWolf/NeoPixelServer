@@ -19,20 +19,30 @@ namespace NeoPixelController.Logic
             Color color,
             float time,
             float intensityDamping,
-            int pixelStartPosition,
-            int numberOfPixels)
+            int areaStartPosition,
+            int areaLength,
+            int effectLength)
         {
             var intensityMultiplier = (1 - intensityDamping);
-            for (int i = 0; i < numberOfPixels; i++)
+            var start = Math.Abs(time % areaLength);
+
+            int startPixel = areaStartPosition + (int)start;
+            int endPixel = Math.Min(startPixel + effectLength, toStrip.Pixels.Count);
+
+            float tStep = 1 / (float)effectLength;
+            var timeOffset = tStep * (1 - (start - (int)start));
+            for (int i = 0; i < effectLength; i++)
             {
-                float t = (Math.Abs(i + time) % numberOfPixels) / numberOfPixels;
-                var interpolation = interpolator.Interpolate(t);
+                float t = tStep * i + timeOffset;
+                var interpolation = interpolator.Interpolate(1 - t);
                 float colorIntensity = (float)MathUtil.Clamp(0, 1, interpolation * intensityMultiplier);
 
-                var currentColor = toStrip.Pixels[i + pixelStartPosition];
-                if (i + pixelStartPosition < toStrip.Pixels.Count)
-                    toStrip.Pixels[i + pixelStartPosition] = 
-                        toStrip.Pixels[i + pixelStartPosition].Add(
+                int index = (startPixel + i) % areaLength;
+                if (index < areaStartPosition) index += areaStartPosition;
+
+                if (index < toStrip.Pixels.Count)
+                    toStrip.Pixels[index] =
+                        toStrip.Pixels[index].Add(
                             Color.FromArgb(
                                 (int)(color.R * colorIntensity),
                                 (int)(color.G * colorIntensity),

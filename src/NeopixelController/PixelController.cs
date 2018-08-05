@@ -34,7 +34,8 @@ namespace NeoPixelController
             IsRunning = true;
             Startup();
             var strip = CreateStrip();
-            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 15));
+            //effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 15, 5));
+            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Green), 50, 14, 10, 1));
             //effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.1f), 0, 64, -10));
             //effectController.AddEffect(new FullColorEffect(strip, new RainbowColorProvider(0.1f)));
             while (IsRunning)
@@ -75,7 +76,7 @@ namespace NeoPixelController
                 DeviceName = "TTYXKIYOFFPQAOFX"
             };
 
-            for (int i = 0; i < 73; i++)
+            for (int i = 0; i < 64; i++)
             {
                 strip.Pixels.Add(Color.Black);
             }
