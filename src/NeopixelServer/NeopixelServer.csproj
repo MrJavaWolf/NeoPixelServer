@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NeopixelController\NeoPixelController.csproj" />
+    <ProjectReference Include="..\NeoPixelController\NeoPixelController.csproj" />
   </ItemGroup>
 
 </Project>

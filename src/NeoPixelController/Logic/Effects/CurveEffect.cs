@@ -41,7 +41,7 @@ namespace NeoPixelController.Logic.Effects
             curve.AddPoint(0.8, 0.25, 0);
             curve.AddPoint(1, 0, 0);
 
-            CubicSpline interpolator = CubicSpline.InterpolateHermite(curve.X.ToArray(), curve.Y.ToArray(), curve.W.ToArray());
+            this.interpolator = CubicSpline.InterpolateHermite(curve.X.ToArray(), curve.Y.ToArray(), curve.W.ToArray());
         }
 
 

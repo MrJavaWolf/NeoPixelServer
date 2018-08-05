@@ -1,5 +1,7 @@
 ﻿using MathNet.Numerics.Interpolation;
 using NeoPixelController.Logic;
+using NeoPixelController.Logic.ColorProviders;
+using NeoPixelController.Logic.Effects;
 using NeoPixelController.Model;
 using System;
 using System.Drawing;
@@ -18,31 +20,38 @@ namespace NeoPixelController
         private const int NumberOfPixels = 38;
 
         public bool IsRunning { get; private set; }
+        private NeoPixelSender neoPixelSender;
+        private EffectController effectController;
+
+        public PixelController()
+        {
+            neoPixelSender = new NeoPixelSender("ws://192.168.0.12");
+            effectController = new EffectController();
+        }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             IsRunning = true;
-            using (var ws = new WebSocket("ws://192.168.0.12"))
+            Startup();
+            var strip = CreateStrip();
+            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.AliceBlue), 0, 64, 25));
+            while (IsRunning)
             {
-                ws.OnMessage += (sender, e) =>
-                    Console.WriteLine("Server: " + e.Data);
-                //get the full location of the assembly with DaoTests in it
-                string fullPath = Assembly.GetExecutingAssembly().Location;
-
-                //get the folder that's in
-                string theDirectory = Path.GetDirectoryName(fullPath);
-
-                ws.Connect();
-                ws.Send(File.ReadAllText(Path.Combine(theDirectory, "Json", "SetDeviceOptions.json")));
-                var strip = CreateStrip();
-                while (IsRunning)
-                {
-                    Thread.Sleep(80);
-                  
-                }
+                effectController.RunEffect();
+                Thread.Sleep(15);
             }
-
             await Task.FromResult(0);
+        }
+
+        private void Startup()
+        {
+            //get the full location of the assembly with DaoTests in it
+            string fullPath = Assembly.GetExecutingAssembly().Location;
+
+            //get the folder that's in
+            string theDirectory = Path.GetDirectoryName(fullPath);
+            neoPixelSender.Connect();
+            neoPixelSender.SendSettings(File.ReadAllText(Path.Combine(theDirectory, "Json", "SetDeviceOptions.json")));
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
@@ -64,6 +73,6 @@ namespace NeoPixelController
                 strip.Pixels.Add(Color.Black);
             }
             return strip;
-        }       
+        }
     }
 }

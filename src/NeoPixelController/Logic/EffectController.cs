@@ -13,9 +13,6 @@ namespace NeoPixelController.Logic
 {
     public class EffectController
     {
-
-        public AnimationType AnimationType { get; set; } = AnimationType.HermitCurve;
-
         private List<INeoPixelEffect> effects = new List<INeoPixelEffect>();
         private Stopwatch stopwatch = new Stopwatch();
         private EffectTime time = new EffectTime();

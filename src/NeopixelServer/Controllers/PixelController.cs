@@ -23,19 +23,19 @@ namespace NeoPixelServer.Controllers
 
         public IActionResult Curve()
         {
-            pixelService.AnimationType = NeoPixelController.Model.AnimationType.HermitCurve;
+            //pixelService.AnimationType = NeoPixelController.Model.AnimationType.HermitCurve;
             return Redirect("index");
         }
 
         public IActionResult SetColor()
         {
-            pixelService.AnimationType = NeoPixelController.Model.AnimationType.SingleColor;
+            //pixelService.AnimationType = NeoPixelController.Model.AnimationType.SingleColor;
             return Redirect("index");
         }
 
         public IActionResult Pulse()
         {
-            pixelService.AnimationType = NeoPixelController.Model.AnimationType.Pulse;
+            //pixelService.AnimationType = NeoPixelController.Model.AnimationType.Pulse;
             return Redirect("index");
         }
     }
