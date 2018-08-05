@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeopixelController.Model
+namespace NeoPixelController.Model
 {
     /// <summary>
     /// https://github.com/scanlime/fadecandy/blob/master/doc/fc_protocol_websocket.md

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using NeopixelController;
+using NeoPixelController;
 
-namespace NeopixelServer.Controllers
+namespace NeoPixelServer.Controllers
 {
     public class PixelController : Controller
     {
-        private readonly NeopixelController.PixelController pixelService;
+        private readonly NeoPixelController.PixelController pixelService;
 
-        public PixelController(NeopixelController.PixelController pixelService)
+        public PixelController(NeoPixelController.PixelController pixelService)
         {
             this.pixelService = pixelService;
         }
@@ -23,19 +23,19 @@ namespace NeopixelServer.Controllers
 
         public IActionResult Curve()
         {
-            pixelService.AnimationType = NeopixelController.Model.AnimationType.HermitCurve;
+            pixelService.AnimationType = NeoPixelController.Model.AnimationType.HermitCurve;
             return Redirect("index");
         }
 
         public IActionResult SetColor()
         {
-            pixelService.AnimationType = NeopixelController.Model.AnimationType.SingleColor;
+            pixelService.AnimationType = NeoPixelController.Model.AnimationType.SingleColor;
             return Redirect("index");
         }
 
         public IActionResult Pulse()
         {
-            pixelService.AnimationType = NeopixelController.Model.AnimationType.Pulse;
+            pixelService.AnimationType = NeoPixelController.Model.AnimationType.Pulse;
             return Redirect("index");
         }
     }

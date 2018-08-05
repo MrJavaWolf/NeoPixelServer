@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeopixelController.Model
+namespace NeoPixelController.Model
 {
     public enum AnimationType
     {

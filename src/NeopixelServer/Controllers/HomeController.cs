@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using NeopixelServer.Models;
+using NeoPixelServer.Models;
 
-namespace NeopixelServer.Controllers
+namespace NeoPixelServer.Controllers
 {
     public class HomeController : Controller
     {

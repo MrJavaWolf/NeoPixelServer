@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NeopixelController;
-using NeopixelServer.Logic;
+using NeoPixelController;
+using NeoPixelServer.Logic;
 
-namespace NeopixelServer
+namespace NeoPixelServer
 {
     public class Startup
     {

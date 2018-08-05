@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NeopixelController.Logic
+namespace NeoPixelController.Logic
 {
     public class MathUtil
     {

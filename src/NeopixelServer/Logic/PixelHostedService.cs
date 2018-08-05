@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Hosting;
-using NeopixelController;
+using NeoPixelController;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NeopixelServer.Logic
+namespace NeoPixelServer.Logic
 {
     public class PixelHostedService : IHostedService
     {

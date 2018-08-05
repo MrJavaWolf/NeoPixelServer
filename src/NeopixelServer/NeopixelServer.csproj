@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>NeopixelServer</AssemblyName>
-    <RootNamespace>NeopixelServer</RootNamespace>
+    <AssemblyName>NeoPixelServer</AssemblyName>
+    <RootNamespace>NeoPixelServer</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NeopixelController\NeopixelController.csproj" />
+    <ProjectReference Include="..\NeopixelController\NeoPixelController.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeopixelServer", "NeopixelServer\NeopixelServer.csproj", "{13F95464-D53F-433E-B8CC-7BB7E044A9E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoPixelServer", "NeoPixelServer\NeoPixelServer.csproj", "{13F95464-D53F-433E-B8CC-7BB7E044A9E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeopixelController", "NeopixelController\NeopixelController.csproj", "{F4A89561-644C-4198-8E76-73047F61D352}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeoPixelController", "NeoPixelController\NeoPixelController.csproj", "{F4A89561-644C-4198-8E76-73047F61D352}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

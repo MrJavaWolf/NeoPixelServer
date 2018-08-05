@@ -1,6 +1,6 @@
 using System;
 
-namespace NeopixelServer.Models
+namespace NeoPixelServer.Models
 {
     public class ErrorViewModel
     {
