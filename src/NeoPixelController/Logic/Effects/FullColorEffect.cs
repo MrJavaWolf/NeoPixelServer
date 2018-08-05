@@ -32,7 +32,7 @@ namespace NeoPixelController.Logic.Effects
             
             for (int i = 0; i < strip.Pixels.Count; i++)
             {
-                strip.Pixels[i].Add(color);
+                strip.Pixels[i] = strip.Pixels[i].Add(color);
             }
         }
 

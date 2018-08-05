@@ -31,11 +31,12 @@ namespace NeoPixelController.Logic
 
                 var currentColor = toStrip.Pixels[i + pixelStartPosition];
                 if (i + pixelStartPosition < toStrip.Pixels.Count)
-                    toStrip.Pixels[i + pixelStartPosition].Add(
-                        Color.FromArgb(
-                            (int)(color.R * colorIntensity),
-                            (int)(color.G * colorIntensity),
-                            (int)(color.B * colorIntensity)));
+                    toStrip.Pixels[i + pixelStartPosition] = 
+                        toStrip.Pixels[i + pixelStartPosition].Add(
+                            Color.FromArgb(
+                                (int)(color.R * colorIntensity),
+                                (int)(color.G * colorIntensity),
+                                (int)(color.B * colorIntensity)));
             }
         }
     }

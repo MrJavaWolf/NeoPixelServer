@@ -53,7 +53,8 @@ namespace NeoPixelController.Logic.Effects
                     (byte)(color.R * rawCalculation),
                     (byte)(color.G * rawCalculation),
                     (byte)(color.B * rawCalculation));
-                strip.Pixels[skipPixels + (i + (int)offset) % numberOfPixels].Add(c);
+                strip.Pixels[skipPixels + (i + (int)offset) % numberOfPixels] = 
+                    strip.Pixels[skipPixels + (i + (int)offset) % numberOfPixels].Add(c);
             }
 
             offset += effectSpeed * time.DeltaTime / 1000.0f;

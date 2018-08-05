@@ -34,10 +34,17 @@ namespace NeoPixelController
             IsRunning = true;
             Startup();
             var strip = CreateStrip();
-            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.AliceBlue), 0, 64, 25));
+            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 15));
+            //effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.1f), 0, 64, -10));
+            //effectController.AddEffect(new FullColorEffect(strip, new RainbowColorProvider(0.1f)));
             while (IsRunning)
             {
+                for (int i = 0; i < strip.Pixels.Count; i++)
+                {
+                    strip.Pixels[i] = Color.Black;
+                }
                 effectController.RunEffect();
+                neoPixelSender.Send(strip);
                 Thread.Sleep(15);
             }
             await Task.FromResult(0);

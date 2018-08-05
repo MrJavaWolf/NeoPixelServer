@@ -9,10 +9,11 @@ namespace NeoPixelController.Logic.Extension
     {
         public static Color Add(this Color color, Color color2)
         {
-            return Color.FromArgb(
-                        (byte)Math.Min(255, (color.R + color2.R)),
+            color = Color.FromArgb(
+                        (byte)Math.Min(255, color.R + color2.R),
                         (byte)Math.Min(255, color.G + color2.G),
                         (byte)Math.Min(255, color.B + color2.B));
+            return color;
         }
     }
 }

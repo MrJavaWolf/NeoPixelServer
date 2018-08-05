@@ -62,9 +62,9 @@ namespace NeoPixelController.Logic.Effects
                 strip, 
                 colorProvider.GetColor(time), 
                 offset, 
-                0, 
-                20, 
-                30);
+                0,
+                pixelStartPosition,
+                numberOfPixels);
             offset += effectSpeed * time.DeltaTime / 1000.0f;
         }
     }

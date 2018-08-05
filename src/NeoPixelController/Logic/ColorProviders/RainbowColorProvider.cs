@@ -9,7 +9,7 @@ namespace NeoPixelController.Logic.ColorProviders
 {
     public class RainbowColorProvider : IColorProvider
     {
-        private readonly float speed = 25;
+        private readonly float speed;
         private float offset = 0;
 
         public RainbowColorProvider(float speed)
