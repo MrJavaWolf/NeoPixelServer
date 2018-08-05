@@ -24,17 +24,24 @@ namespace NeoPixelController.Logic
             int effectLength)
         {
             var intensityMultiplier = (1 - intensityDamping);
-            var start = Math.Abs(time % areaLength);
+            var start = time % areaLength;
 
             int startPixel = areaStartPosition + (int)start;
             int endPixel = Math.Min(startPixel + effectLength, toStrip.Pixels.Count);
 
             float tStep = 1 / (float)effectLength;
-            var timeOffset = tStep * (1 - (start - (int)start));
+            float timeOffset;
+
+            if (time > 0) //Time is going forward
+                timeOffset = tStep * (1 - Math.Abs(start - (int)start));
+            else //Time is going backwards
+                timeOffset = tStep * (Math.Abs(start - (int)start));
             for (int i = 0; i < effectLength; i++)
             {
                 float t = tStep * i + timeOffset;
-                var interpolation = interpolator.Interpolate(1 - t);
+                if (time > 0) //Time is going forward
+                    t = 1 - t;
+                var interpolation = interpolator.Interpolate(t);
                 float colorIntensity = (float)MathUtil.Clamp(0, 1, interpolation * intensityMultiplier);
 
                 int index = (startPixel + i) % areaLength;
