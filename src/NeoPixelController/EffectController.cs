@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using WebSocketSharp;
 
-namespace NeoPixelController.Logic
+namespace NeoPixelController
 {
     public class EffectController
     {
@@ -17,7 +17,7 @@ namespace NeoPixelController.Logic
         private Stopwatch stopwatch = new Stopwatch();
         private EffectTime time = new EffectTime();
 
-        public void RunEffect()
+        internal void RunEffect()
         {
             UpdateTime();
             foreach (var effect in effects)

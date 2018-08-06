@@ -7,6 +7,9 @@ namespace NeoPixelController.Interface
 {
     public interface INeoPixelEffect
     {
+        Guid Id { get; }
+        string Name { get; set; }
+
         void Enter(EffectTime time);
         void Update(EffectTime time);
         void Exit(EffectTime time);

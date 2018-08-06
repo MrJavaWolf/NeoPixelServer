@@ -15,18 +15,14 @@ namespace NeoPixelController
 {
     public class PixelController
     {
-
-        private const int SkipPixels = 18;
-        private const int NumberOfPixels = 38;
-
         public bool IsRunning { get; private set; }
         private NeoPixelSender neoPixelSender;
         private EffectController effectController;
 
-        public PixelController()
+        public PixelController(EffectController effectController)
         {
             neoPixelSender = new NeoPixelSender("ws://192.168.0.12");
-            effectController = new EffectController();
+            this.effectController = effectController;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)

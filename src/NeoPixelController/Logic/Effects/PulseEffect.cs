@@ -10,11 +10,14 @@ namespace NeoPixelController.Logic.Effects
 {
     class PulseEffect : INeoPixelEffect
     {
-        private readonly NeoPixelStrip strip;
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string Name { get; set; } = nameof(PulseEffect);
         public int SkipPixels { get; set; }
         public int NumberOfPixels { get; set; }
         public IColorProvider ColorProvider { get; set; }
         public float EffectSpeed { get; set; }
+
+        private readonly NeoPixelStrip strip;
         private float offset = 0;
 
         public PulseEffect(

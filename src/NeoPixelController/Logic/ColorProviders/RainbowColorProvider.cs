@@ -9,6 +9,9 @@ namespace NeoPixelController.Logic.ColorProviders
 {
     public class RainbowColorProvider : IColorProvider
     {
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string Name { get; set; } = nameof(RainbowColorProvider);
+
         public float Speed { get; set; }
         private float offset = 0;
 

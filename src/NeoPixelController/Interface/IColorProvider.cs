@@ -8,6 +8,8 @@ namespace NeoPixelController.Interface
 {
     public interface IColorProvider
     {
+        Guid Id { get; }
+        string Name { get; set; }
         Color GetColor(EffectTime time);
     }
 }

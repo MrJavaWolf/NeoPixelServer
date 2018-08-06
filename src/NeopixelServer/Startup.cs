@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NeoPixelController;
+using NeoPixelController.Logic;
 using NeoPixelServer.Logic;
 
 namespace NeoPixelServer
@@ -25,6 +26,7 @@ namespace NeoPixelServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSingleton<EffectController>();
             services.AddSingleton<PixelController>();
             services.AddSingleton<IHostedService, PixelHostedService>();
         }

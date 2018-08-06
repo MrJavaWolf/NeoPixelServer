@@ -10,9 +10,10 @@ namespace NeoPixelController.Logic.Effects
 {
     public class FullColorEffect : INeoPixelEffect
     {
-
-        private readonly NeoPixelStrip strip;
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string Name { get; set; } = nameof(FullColorEffect);
         public IColorProvider ColorProvider { get; set; }
+        private readonly NeoPixelStrip strip;
 
         public FullColorEffect(NeoPixelStrip strip, IColorProvider colorProvider)
         {

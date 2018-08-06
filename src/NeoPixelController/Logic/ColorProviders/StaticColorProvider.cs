@@ -9,6 +9,9 @@ namespace NeoPixelController.Logic.ColorProviders
 {
     public class StaticColorProvider : IColorProvider
     {
+
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string Name { get; set; } = nameof(StaticColorProvider);
         public Color Color { get; set; }
 
         public StaticColorProvider(Color color)

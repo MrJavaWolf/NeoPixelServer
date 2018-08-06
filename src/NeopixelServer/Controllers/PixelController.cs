@@ -9,15 +9,16 @@ namespace NeoPixelServer.Controllers
 {
     public class PixelController : Controller
     {
-        private readonly NeoPixelController.PixelController pixelService;
+        private readonly EffectController effectController;
 
-        public PixelController(NeoPixelController.PixelController pixelService)
+        public PixelController(EffectController effectController)
         {
-            this.pixelService = pixelService;
+            this.effectController = effectController;
         }
 
         public IActionResult Index()
         {
+            effectController.GetEffects();
             return View();
         }
 
