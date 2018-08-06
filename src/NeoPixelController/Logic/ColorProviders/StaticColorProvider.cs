@@ -9,16 +9,16 @@ namespace NeoPixelController.Logic.ColorProviders
 {
     public class StaticColorProvider : IColorProvider
     {
-        private readonly Color color;
+        public Color Color { get; set; }
 
         public StaticColorProvider(Color color)
         {
-            this.color = color;
+            this.Color = color;
         }
 
         public Color GetColor(EffectTime time)
         {
-            return color;
+            return Color;
         }
     }
 }

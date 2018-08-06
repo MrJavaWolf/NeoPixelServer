@@ -12,12 +12,12 @@ namespace NeoPixelController.Logic.Effects
     {
 
         private readonly NeoPixelStrip strip;
-        private readonly IColorProvider colorProvider;
+        public IColorProvider ColorProvider { get; set; }
 
         public FullColorEffect(NeoPixelStrip strip, IColorProvider colorProvider)
         {
             this.strip = strip;
-            this.colorProvider = colorProvider;
+            this.ColorProvider = colorProvider;
         }
 
         public void Enter(EffectTime time)
@@ -28,7 +28,7 @@ namespace NeoPixelController.Logic.Effects
         public void Update(EffectTime time)
         {
             
-            Color color = colorProvider.GetColor(time);
+            Color color = ColorProvider.GetColor(time);
             
             for (int i = 0; i < strip.Pixels.Count; i++)
             {

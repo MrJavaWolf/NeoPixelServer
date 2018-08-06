@@ -9,17 +9,17 @@ namespace NeoPixelController.Logic.ColorProviders
 {
     public class RainbowColorProvider : IColorProvider
     {
-        private readonly float speed;
+        public float Speed { get; set; }
         private float offset = 0;
 
         public RainbowColorProvider(float speed)
         {
-            this.speed = speed;
+            this.Speed = speed;
         }
 
         public Color GetColor(EffectTime time)
         {
-            offset += speed * time.DeltaTime / 1000.0f;
+            offset += Speed * time.DeltaTime / 1000.0f;
 
             //https://stackoverflow.com/questions/2288498/how-do-i-get-a-rainbow-color-gradient-in-c
             float div = (Math.Abs(offset % 1) * 6);

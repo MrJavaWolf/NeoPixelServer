@@ -11,9 +11,9 @@ namespace NeoPixelController.Logic.Effects
     class PulseEffect : INeoPixelEffect
     {
         private readonly NeoPixelStrip strip;
-        private readonly int skipPixels;
-        private readonly int numberOfPixels;
-        private readonly IColorProvider colorProvider;
+        public int SkipPixels { get; set; }
+        public int NumberOfPixels { get; set; }
+        public IColorProvider ColorProvider { get; set; }
 
         //Pixels per second
         private readonly float effectSpeed = 25;
@@ -27,9 +27,9 @@ namespace NeoPixelController.Logic.Effects
             float speed)
         {
             this.strip = strip;
-            this.skipPixels = skipPixels;
-            this.colorProvider = colorProvider;
-            this.numberOfPixels = numberOfPixels;
+            this.SkipPixels = skipPixels;
+            this.ColorProvider = colorProvider;
+            this.NumberOfPixels = numberOfPixels;
             this.effectSpeed = speed;
         }
 
@@ -45,16 +45,16 @@ namespace NeoPixelController.Logic.Effects
 
         public void Update(EffectTime time)
         {
-            for (int i = skipPixels; i < strip.Pixels.Count && i < skipPixels + numberOfPixels; i++)
+            for (int i = SkipPixels; i < strip.Pixels.Count && i < SkipPixels + NumberOfPixels; i++)
             {
                 double rawCalculation = strip.Pixels.Count / (double)i;
-                Color color = colorProvider.GetColor(time);
+                Color color = ColorProvider.GetColor(time);
                 Color c = Color.FromArgb(
                     (byte)(color.R * rawCalculation),
                     (byte)(color.G * rawCalculation),
                     (byte)(color.B * rawCalculation));
-                strip.Pixels[skipPixels + (i + (int)offset) % numberOfPixels] = 
-                    strip.Pixels[skipPixels + (i + (int)offset) % numberOfPixels].Add(c);
+                strip.Pixels[SkipPixels + (i + (int)offset) % NumberOfPixels] = 
+                    strip.Pixels[SkipPixels + (i + (int)offset) % NumberOfPixels].Add(c);
             }
 
             offset += effectSpeed * time.DeltaTime / 1000.0f;

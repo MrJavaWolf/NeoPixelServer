@@ -11,11 +11,11 @@ namespace NeoPixelController.Logic.Effects
     public class CurveEffect : INeoPixelEffect
     {
         private readonly NeoPixelStrip strip;
-        private readonly CubicSpline interpolator;
-        private readonly IColorProvider colorProvider;
-        private readonly int pixelStartPosition;
-        private readonly int numberOfPixels;
-        private readonly int effectLength;
+        public CubicSpline Interpolator { get; set; }
+        public IColorProvider ColorProvider { get; set; }
+        public int PixelStartPosition { get; set; }
+        public int NumberOfPixels { get; set; }
+        public int EffectLength { get; set; }
 
         //Pixels per second
         private readonly float effectSpeed = 25;
@@ -30,10 +30,10 @@ namespace NeoPixelController.Logic.Effects
             float speed)
         {
             this.strip = strip;
-            this.colorProvider = colorProvider;
-            this.numberOfPixels = numberOfPixels;
-            this.effectLength = effectLength;
-            this.pixelStartPosition = pixelStartPosition;
+            this.ColorProvider = colorProvider;
+            this.NumberOfPixels = numberOfPixels;
+            this.EffectLength = effectLength;
+            this.PixelStartPosition = pixelStartPosition;
             this.effectSpeed = speed;
 
             Curve curve = new Curve();
@@ -43,7 +43,7 @@ namespace NeoPixelController.Logic.Effects
             curve.AddPoint(0.9, 0.25, 0);
             curve.AddPoint(1, 0, 0);
 
-            this.interpolator = CubicSpline.InterpolateHermite(curve.X.ToArray(), curve.Y.ToArray(), curve.W.ToArray());
+            this.Interpolator = CubicSpline.InterpolateHermite(curve.X.ToArray(), curve.Y.ToArray(), curve.W.ToArray());
         }
 
 
@@ -60,14 +60,14 @@ namespace NeoPixelController.Logic.Effects
         public void Update(EffectTime time)
         {
             InterpolationEffect.Apply(
-                interpolator,
+                Interpolator,
                 strip,
-                colorProvider.GetColor(time),
+                ColorProvider.GetColor(time),
                 offset,
                 0,
-                pixelStartPosition,
-                numberOfPixels,
-                effectLength);
+                PixelStartPosition,
+                NumberOfPixels,
+                EffectLength);
             offset += effectSpeed * time.DeltaTime / 1000.0f;
         }
     }
