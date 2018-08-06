@@ -21,7 +21,7 @@ namespace NeoPixelController
 
         public PixelController(EffectController effectController)
         {
-            neoPixelSender = new NeoPixelSender("ws://192.168.0.12");
+            neoPixelSender = new NeoPixelSender("ws://192.168.0.101");
             this.effectController = effectController;
         }
 
@@ -30,8 +30,9 @@ namespace NeoPixelController
             IsRunning = true;
             Startup();
             var strip = CreateStrip();
-            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 15, 5));
-            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Green), 50, 14, 10, -2));
+            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 10, 5));
+            //effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Green), 50, 14, 10, -2));
+            //effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Red), 10, 50, 10, 5));
             //effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.1f), 0, 64, -10));
             //effectController.AddEffect(new FullColorEffect(strip, new RainbowColorProvider(0.1f)));
             while (IsRunning)

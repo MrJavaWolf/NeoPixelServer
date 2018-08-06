@@ -3,9 +3,6 @@
 8 each way 
 Fade Candy can take 64 pixel per channel and have 8 channels 
 Each strip should be 10.6 cm from eachother
-- - - 30 pr m - - - 
-720 neopixels
-
 
 - - - 60 pr m - - - 
 each strip is: 180
@@ -18,8 +15,3 @@ Fadecandy give: 2 channels på strip
 bytes per page: 4320
 Framerate (30): 129.600 bytes per second
 Framerate (60): 259.200 bytes per second
-
-
-
-- - - 144 pr m - - - 
-3456 neopixels

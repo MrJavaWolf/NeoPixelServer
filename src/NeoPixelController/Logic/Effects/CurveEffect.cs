@@ -39,9 +39,9 @@ namespace NeoPixelController.Logic.Effects
 
             Curve curve = new Curve();
             curve.AddPoint(0, 0, 0);
-            curve.AddPoint(0.1, 1, 0);
-            curve.AddPoint(0.2, 0.35, 0);
-            curve.AddPoint(0.9, 0.25, 0);
+            curve.AddPoint(0.2, 1, 0);
+            //curve.AddPoint(0.5, 0.35, 0);
+            //curve.AddPoint(0.9, 0.25, 0);
             curve.AddPoint(1, 0, 0);
 
             this.Interpolator = CubicSpline.InterpolateHermite(curve.X.ToArray(), curve.Y.ToArray(), curve.W.ToArray());
