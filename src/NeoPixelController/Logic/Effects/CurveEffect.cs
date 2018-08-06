@@ -16,9 +16,7 @@ namespace NeoPixelController.Logic.Effects
         public int PixelStartPosition { get; set; }
         public int NumberOfPixels { get; set; }
         public int EffectLength { get; set; }
-
-        //Pixels per second
-        private readonly float effectSpeed = 25;
+        public float EffectSpeed { get; set; }
         private float offset = 0;
 
         public CurveEffect(
@@ -34,7 +32,7 @@ namespace NeoPixelController.Logic.Effects
             this.NumberOfPixels = numberOfPixels;
             this.EffectLength = effectLength;
             this.PixelStartPosition = pixelStartPosition;
-            this.effectSpeed = speed;
+            this.EffectSpeed = speed;
 
             Curve curve = new Curve();
             curve.AddPoint(0, 0, 0);
@@ -68,7 +66,7 @@ namespace NeoPixelController.Logic.Effects
                 PixelStartPosition,
                 NumberOfPixels,
                 EffectLength);
-            offset += effectSpeed * time.DeltaTime / 1000.0f;
+            offset += EffectSpeed * time.DeltaTime / 1000.0f;
         }
     }
 }

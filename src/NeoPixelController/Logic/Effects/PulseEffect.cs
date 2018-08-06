@@ -14,9 +14,7 @@ namespace NeoPixelController.Logic.Effects
         public int SkipPixels { get; set; }
         public int NumberOfPixels { get; set; }
         public IColorProvider ColorProvider { get; set; }
-
-        //Pixels per second
-        private readonly float effectSpeed = 25;
+        public float EffectSpeed { get; set; }
         private float offset = 0;
 
         public PulseEffect(
@@ -30,7 +28,7 @@ namespace NeoPixelController.Logic.Effects
             this.SkipPixels = skipPixels;
             this.ColorProvider = colorProvider;
             this.NumberOfPixels = numberOfPixels;
-            this.effectSpeed = speed;
+            this.EffectSpeed = speed;
         }
 
         public void Enter(EffectTime time)
@@ -57,7 +55,7 @@ namespace NeoPixelController.Logic.Effects
                     strip.Pixels[SkipPixels + (i + (int)offset) % NumberOfPixels].Add(c);
             }
 
-            offset += effectSpeed * time.DeltaTime / 1000.0f;
+            offset += EffectSpeed * time.DeltaTime / 1000.0f;
         }
 
     }
