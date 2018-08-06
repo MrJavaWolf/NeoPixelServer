@@ -55,7 +55,7 @@ namespace NeoPixelController
                 //eclipsedMilliseconds = Math.Min(eclipsedMilliseconds - time.Time, time.Time + 16);
                 time.DeltaTime = eclipsedMilliseconds - time.Time;
                 time.Time = eclipsedMilliseconds;
-                Console.WriteLine("time.DeltaTime: "+ time.DeltaTime);
+                //Console.WriteLine("time.DeltaTime: "+ time.DeltaTime);
             }
         }
     }
