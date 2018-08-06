@@ -1,0 +1,12 @@
+﻿{
+  "type": "device_options",
+  "device": {
+    "type": "fadecandy",
+    "serial": "TTYXKIYOFFPQAOFX"
+  },
+  "options": {
+    "led": true,
+    "dither": false,
+    "interpolate": false
+  }
+}
