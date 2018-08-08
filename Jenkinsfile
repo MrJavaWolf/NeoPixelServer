@@ -4,16 +4,14 @@ pipeline {
     stage('Compiling') {
       steps { 
 		echo 'Compiling..'
-        dotnet publish src/NeoPixelServer/NeoPixelServer.csproj --configuration Release --output ../../bin/
-		zip -r bin.zip bin
+        sh 'dotnet publish src/NeoPixelServer/NeoPixelServer.csproj --configuration Release --output ../../bin/'
 		echo 'Building completed successfully'
       }
     }
 	stage('Zip') {
       steps { 
 		echo 'Zips the compiled files..'
-        dotnet publish src/NeoPixelServer/NeoPixelServer.csproj --configuration Release --output ../../bin/
-		zip -r bin.zip bin
+		sh 'zip -r bin.zip bin'
 		echo 'Zip completed successfully'
       }
     }
