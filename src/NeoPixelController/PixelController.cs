@@ -43,7 +43,7 @@ namespace NeoPixelController
                 }
                 effectController.RunEffect();
                 neoPixelSender.Send(strip);
-                Thread.Sleep(15);
+                await Task.Delay(15);
             }
             await Task.FromResult(0);
         }
