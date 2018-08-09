@@ -25,7 +25,7 @@ pipeline {
 		stage('Deploying') {
 			steps { 
 				echo 'Stops the old process...'
-				sh 'kill $(pgrep dotnet)'
+				
 				echo 'Installs the new binaries'
 				sh 'sudo unzip bin.zip -d /opt/NeoPixelServer'
 			}
