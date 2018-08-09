@@ -11,7 +11,7 @@ pipeline {
 		stage('Zip') {
 			steps { 
 				echo 'Zips the compiled files..'
-				zip -r bin.zip bin
+				sh 'zip -r bin.zip bin'
 				echo 'Zip completed successfully'
 			}
 		}
