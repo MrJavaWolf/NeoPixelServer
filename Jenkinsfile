@@ -17,8 +17,8 @@ pipeline {
 		}
     }
     post { 
-        always { 
-            echo 'I will always say Hello again!'
+        success { 
+            archiveArtifacts artifacts: 'bin.zip', fingerprint: true
         }
     }
 }
