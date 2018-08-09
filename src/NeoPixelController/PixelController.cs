@@ -32,7 +32,7 @@ namespace NeoPixelController
             var strip = CreateStrip();
             //effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Blue), 0, 64, 10, 5));
             effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 10, 5));
-            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Green), 50, 14, 10, -2));
+            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Blue), 50, 14, 10, -2));
             //effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Red), 10, 50, 10, 5));
             //effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.1f), 0, 64, -10));
             //effectController.AddEffect(new FullColorEffect(strip, new RainbowColorProvider(0.1f)));
