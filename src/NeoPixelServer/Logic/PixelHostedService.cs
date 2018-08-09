@@ -10,21 +10,25 @@ namespace NeoPixelServer.Logic
 {
     public class PixelHostedService : IHostedService
     {
-        private readonly PixelController pixelService;
+        private readonly PixelController pixelController;
 
-        public PixelHostedService(PixelController pixelService)
+        public PixelHostedService(PixelController pixelController)
         {
-            this.pixelService = pixelService;
+            this.pixelController = pixelController;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await this.pixelService.StartAsync(cancellationToken);
+            Console.WriteLine("Starting PixelController...");
+            this.pixelController.StartAsync(cancellationToken).Start();
+            Console.WriteLine("PixelController started");
+            await Task.CompletedTask;
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            await this.pixelService.StopAsync(cancellationToken);
+            Console.WriteLine("Stopping PixelController...");
+            await this.pixelController.StopAsync(cancellationToken);
         }
     }
 }
