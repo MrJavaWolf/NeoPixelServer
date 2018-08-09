@@ -43,9 +43,22 @@ namespace NeoPixelServer.Controllers
             });
         }
 
-        public IActionResult Curve()
+        [HttpPost]
+        public IActionResult UpdateCurveEffect(CurveEffectViewModel curveEffect)
         {
-            //pixelService.AnimationType = NeoPixelController.Model.AnimationType.HermitCurve;
+            if (ModelState.IsValid)
+            {
+                var effects = effectController.GetEffects();
+                var oldEffect = effects.Where(e => e.Id == curveEffect.Id).FirstOrDefault();
+                if (oldEffect is CurveEffect oldCurveEffect)
+                {
+                    oldCurveEffect.EffectSpeed = curveEffect.EffectSpeed;
+                    oldCurveEffect.EffectLength = curveEffect.EffectLength;
+                    oldCurveEffect.Name = curveEffect.Name;
+                    oldCurveEffect.NumberOfPixels = curveEffect.NumberOfPixels;
+                    oldCurveEffect.PixelStartPosition = curveEffect.PixelStartPosition;
+                }
+            }
             return Redirect("index");
         }
 

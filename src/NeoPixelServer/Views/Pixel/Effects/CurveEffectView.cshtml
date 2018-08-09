@@ -1,8 +1,11 @@
 ﻿@model NeoPixelServer.ViewModels.CurveEffectViewModel
 
 
-<form>
+<form asp-controller="Pixel" asp-action="UpdateCurveEffect" method="post">
     <fieldset>
+        <div class="form-group">
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+        </div>
         <legend>@Model.Name</legend>
 
         <div class="form-group">
@@ -11,32 +14,32 @@
         </div>
 
         <div class="form-group">
-            <label for="Name">Change Name</label>
-            <input class="form-control" id="Name" aria-describedby="NameHelp" type="text" value="@Model.Name">
+            <label asp-for="Name">Change Name</label>
+            <input class="form-control" asp-for="Name" aria-describedby="NameHelp">
             <small id="NameHelp" class="form-text text-muted">Name of the effect.</small>
         </div>
 
         <div class="form-group">
-            <label for="PixelStartPosition">Area Start Position</label>
-            <input class="form-control" id="PixelStartPosition" aria-describedby="PixelStartPositionHelp" type="number" value="@Model.PixelStartPosition">
+            <label asp-for="PixelStartPosition">Area Start Position</label>
+            <input class="form-control" asp-for="PixelStartPosition" aria-describedby="PixelStartPositionHelp">
             <small id="PixelStartPositionHelp" class="form-text text-muted">How far in the effect should start.</small>
         </div>
         <div class="form-group">
-            <label for="NumberOfPixels">Area Length Position</label>
-            <input class="form-control" id="NumberOfPixels" aria-describedby="NumberOfPixelsHelp" type="number" value="@Model.NumberOfPixels">
+            <label asp-for="NumberOfPixels">Area Length Position</label>
+            <input class="form-control" asp-for="NumberOfPixels" aria-describedby="NumberOfPixelsHelp">
             <small id="NumberOfPixelsHelp" class="form-text text-muted">How long the effect area should be.</small>
         </div>
         <div class="form-group">
-            <label for="EffectLength">Effect Length</label>
-            <input class="form-control" id="EffectLength" aria-describedby="EffectLengthHelp" type="number" value="@Model.EffectLength">
+            <label asp-for="EffectLength">Effect Length</label>
+            <input class="form-control" asp-for="EffectLength" aria-describedby="EffectLengthHelp">
             <small id="EffectLengthHelp" class="form-text text-muted">How long the effect itself should be.</small>
         </div>
         <div class="form-group">
-            <label for="EffectSpeed">Effect Speed</label>
-            <input class="form-control" id="EffectSpeed" aria-describedby="EffectSpeedHelp" type="number" value="@Model.EffectSpeed">
+            <label asp-for="EffectSpeed">Effect Speed</label>
+            <input class="form-control" asp-for="EffectSpeed" aria-describedby="EffectSpeedHelp" >
             <small id="EffectSpeedHelp" class="form-text text-muted">How fast the effect is.</small>
         </div>
         <button type="submit" class="btn btn-primary">Apply</button>
-        <button type="submit" class="btn btn-outline-danger float-right" disabled>Delete</button>
+        <button type="reset" class="btn btn-outline-danger float-right" disabled>Delete</button>
     </fieldset>
 </form>
