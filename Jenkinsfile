@@ -1,17 +1,6 @@
-pipeline {
-  agent any
-  stages {
-    stage('Compiling') {
-      steps { 
-		echo 'Compiling..'
-		echo 'Building completed successfully'
-      }
-    }
-	stage('Zip') {
-      steps { 
-		echo 'Zips the compiled files..'
-		echo 'Zip completed successfully'
-      }
-    }
-  }
+stage name: 'Compile'
+node{
+    echo 'My first working jenkinsfile?'
+    echo "Deployed to production"
+	echo "Maybe...?"
 }
