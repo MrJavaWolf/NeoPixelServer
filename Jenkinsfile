@@ -4,7 +4,7 @@ pipeline {
 	    stage('Compiling') {
 			steps { 
 				echo 'Compiling..'
-				sh 'dotnet publish src/NeoPixelServer/NeoPixelServer.csproj --configuration Release --runtime linux-x64 --self-contained --output ../../bin/'
+				sh 'dotnet publish src/NeoPixelServer/NeoPixelServer.csproj --configuration Release --output ../../bin/'
                echo 'Building completed successfully'
 			}
 		}
