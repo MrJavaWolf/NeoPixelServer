@@ -6,7 +6,7 @@
     <RootNamespace>NeoPixelServer</RootNamespace>
   </PropertyGroup>
   
-  <PropertyGroup  Condition="'$(Configuration)' == 'Release'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
   </PropertyGroup>
 

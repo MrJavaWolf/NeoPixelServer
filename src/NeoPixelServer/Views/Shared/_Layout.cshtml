@@ -33,11 +33,33 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Pixel" asp-action="Index">Pixel</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">NeoPixelServer</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Pixel" asp-action="Index">Pixel</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
