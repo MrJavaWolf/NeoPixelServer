@@ -15,10 +15,20 @@ pipeline {
 				echo 'Zip completed successfully'
 			}
 		}
-    }
-    post { 
-        success { 
-            archiveArtifacts artifacts: 'bin.zip', fingerprint: true
-        }
+		stage('Saves Artifacts') {
+			steps { 
+				echo 'Saves Artifact: bin.zip'
+				archiveArtifacts artifacts: 'bin.zip', fingerprint: true
+
+			}
+		}
+		stage('Deploying') {
+			steps { 
+				echo 'Stops the old process...'
+				sh 'kill $(pgrep dotnet)'
+				echo 'Installs the new binaries'
+				sh 'unzip bin.zip -d /opt/NeoPixelServer'
+			}
+		}
     }
 }

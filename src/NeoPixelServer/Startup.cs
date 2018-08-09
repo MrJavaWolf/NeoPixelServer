@@ -26,9 +26,9 @@ namespace NeoPixelServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<EffectController>();
-            services.AddSingleton<PixelController>();
-            services.AddSingleton<IHostedService, PixelHostedService>();
+            //services.AddSingleton<EffectController>();
+            //services.AddSingleton<PixelController>();
+            //services.AddSingleton<IHostedService, PixelHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
