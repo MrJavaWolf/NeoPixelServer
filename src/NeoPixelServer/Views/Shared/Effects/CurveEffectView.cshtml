@@ -1,0 +1,42 @@
+﻿@model NeoPixelServer.ViewModels.CurveEffectViewModel
+
+
+<form>
+    <fieldset>
+        <legend>@Model.Name</legend>
+
+        <div class="form-group">
+            <label for="Type">Type</label>
+            <span id="Type" class="badge badge-pill badge-secondary">Curve Effect</span>
+        </div>
+
+        <div class="form-group">
+            <label for="Name">Change Name</label>
+            <input class="form-control" id="Name" aria-describedby="NameHelp" type="text" value="@Model.Name">
+            <small id="NameHelp" class="form-text text-muted">Name of the effect.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="PixelStartPosition">Area Start Position</label>
+            <input class="form-control" id="PixelStartPosition" aria-describedby="PixelStartPositionHelp" type="number" value="@Model.PixelStartPosition">
+            <small id="PixelStartPositionHelp" class="form-text text-muted">How far in the effect should start.</small>
+        </div>
+        <div class="form-group">
+            <label for="NumberOfPixels">Area Length Position</label>
+            <input class="form-control" id="NumberOfPixels" aria-describedby="NumberOfPixelsHelp" type="number" value="@Model.NumberOfPixels">
+            <small id="NumberOfPixelsHelp" class="form-text text-muted">How long the effect area should be.</small>
+        </div>
+        <div class="form-group">
+            <label for="EffectLength">Effect Length</label>
+            <input class="form-control" id="EffectLength" aria-describedby="EffectLengthHelp" type="number" value="@Model.EffectLength">
+            <small id="EffectLengthHelp" class="form-text text-muted">How long the effect itself should be.</small>
+        </div>
+        <div class="form-group">
+            <label for="EffectSpeed">Effect Speed</label>
+            <input class="form-control" id="EffectSpeed" aria-describedby="EffectSpeedHelp" type="number" value="@Model.EffectSpeed">
+            <small id="EffectSpeedHelp" class="form-text text-muted">How fast the effect is.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+        <button type="submit" class="btn btn-outline-danger float-right" disabled>Delete</button>
+    </fieldset>
+</form>

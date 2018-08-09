@@ -1,6 +1,22 @@
-﻿<h2>Pixel controller</h2>
+﻿@model NeoPixelServer.ViewModels.PixelViewModel
 
-<a asp-area="" asp-controller="Pixel" asp-action="Curve">Curve</a>
-<a asp-area="" asp-controller="Pixel" asp-action="SetColor">SetColor</a>
-<a asp-area="" asp-controller="Pixel" asp-action="Pulse">Pulse</a>
 
+<h2>Pixel controller</h2>
+<div class="row">
+    @{
+
+        foreach (var effect in Model.BaseViewModels)
+        {
+            if (effect is NeoPixelServer.ViewModels.CurveEffectViewModel curveEffect)
+            {
+                <div class="col-sm">
+                    <div class="card text-white bg-primary mb-3" style="min-width: 20rem; max-width: 20rem;">
+                        <div class="card-body">
+                            @await Html.PartialAsync("Effects/CurveEffectView", curveEffect)
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
