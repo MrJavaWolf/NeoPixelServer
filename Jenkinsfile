@@ -1,6 +1,5 @@
-stage name: 'Compile'
-node{
-    echo 'My first working jenkinsfile?'
-    echo "Deployed to production"
-	echo "Maybe...?"
+node {
+  stage('HelloWorld') {
+    echo 'Hello World'
+  }
 }
