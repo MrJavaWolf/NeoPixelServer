@@ -19,8 +19,9 @@ namespace NeoPixelServer.Logic
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            Console.WriteLine("Starting PixelController...");
-            this.pixelController.StartAsync(cancellationToken).Start();
+           Console.WriteLine("Starting PixelController...");
+           Task.Run( async () => await pixelController.StartAsync(cancellationToken));
+
             Console.WriteLine("PixelController started");
             await Task.CompletedTask;
         }

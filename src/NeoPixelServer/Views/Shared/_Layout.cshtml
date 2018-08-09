@@ -17,27 +17,6 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">NeoPixelServer</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Pixel" asp-action="Index">Pixel</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">NeoPixelServer</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,20 +24,19 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a asp-area="" asp-controller="Pixel" asp-action="Index">Pixel</a>
+                    <a class="nav-link" asp-area="" asp-controller="Pixel" asp-action="Index">Pixel</a>
                 </li>
                 <li class="nav-item">
-                    <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
             </ul>
         </div>
     </nav>
-
 
     <div class="container body-content">
         @RenderBody()
