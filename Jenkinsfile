@@ -28,6 +28,8 @@ pipeline {
 				
 				echo 'Installs the new binaries'
 				sh 'sudo unzip bin.zip -d /opt/NeoPixelServer'
+				echo 'Starts the application'
+				sh 'sudo bash -c 'dotnet /opt/NeoPixelServer/bin/NeoPixelServer.dll;''
 			}
 		}
     }
