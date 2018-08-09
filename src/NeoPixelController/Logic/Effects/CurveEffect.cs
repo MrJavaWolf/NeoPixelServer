@@ -12,6 +12,7 @@ namespace NeoPixelController.Logic.Effects
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string Name { get; set; } = nameof(CurveEffect);
+        public bool IsEnabled { get; set; } = true;
         public IInterpolation Interpolator { get; set; }
         public IColorProvider ColorProvider { get; set; }
         public int PixelStartPosition { get; set; }

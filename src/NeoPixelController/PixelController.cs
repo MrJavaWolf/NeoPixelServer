@@ -30,11 +30,30 @@ namespace NeoPixelController
             IsRunning = true;
             Startup();
             var strip = CreateStrip();
-            //effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Blue), 0, 64, 10, 5));
-            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 10, 5));
-            //effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Blue), 50, 14, 10, -2));
-            //effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Red), 10, 50, 10, 5));
-            //effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.1f), 0, 64, -10));
+            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 10, 5)
+            {
+                Name = "Rainbow"
+            });
+            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 30, 50, 5, 1)
+            {
+                Name = "Small slow rainbow",
+                IsEnabled = false
+            });
+            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Green), 0, 64, 13, 3)
+            {
+                Name = "Green",
+                IsEnabled = false
+            });
+            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Red), 0, 64, 10, 7)
+            {
+                Name = "Red",
+                IsEnabled = false
+            });
+            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Blue), 0, 64, 7, 5)
+            {
+                Name = "Blue",
+                IsEnabled = false
+            });
             //effectController.AddEffect(new FullColorEffect(strip, new RainbowColorProvider(0.1f)));
             while (IsRunning)
             {

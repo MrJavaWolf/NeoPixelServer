@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace NeoPixelServer.ViewModels
 {
-    public abstract class BaseColorProviderViewModel : BaseViewModel
+    public abstract class BaseColorProviderViewModel
     {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 }

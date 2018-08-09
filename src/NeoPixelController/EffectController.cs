@@ -22,7 +22,10 @@ namespace NeoPixelController
             UpdateTime();
             foreach (var effect in effects)
             {
-                effect.Update(time);
+                if (effect.IsEnabled)
+                {
+                    effect.Update(time);
+                }
             }
         }
 

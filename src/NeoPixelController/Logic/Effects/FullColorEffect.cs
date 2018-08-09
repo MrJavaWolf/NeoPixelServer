@@ -12,6 +12,7 @@ namespace NeoPixelController.Logic.Effects
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string Name { get; set; } = nameof(FullColorEffect);
+        public bool IsEnabled { get; set; } = true;
         public IColorProvider ColorProvider { get; set; }
         private readonly NeoPixelStrip strip;
 

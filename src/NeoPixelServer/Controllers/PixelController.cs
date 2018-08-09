@@ -20,7 +20,7 @@ namespace NeoPixelServer.Controllers
 
         public IActionResult Index()
         {
-            var effects = effectController.GetEffects();
+            var effects = effectController.GetEffects().OrderBy(e => e.IsEnabled == false);
             List<BaseViewModel> viewModels = new List<BaseViewModel>();
             foreach (var effect in effects)
             {
@@ -29,6 +29,7 @@ namespace NeoPixelServer.Controllers
                     viewModels.Add(new CurveEffectViewModel()
                     {
                         Id = curveEffect.Id,
+                        IsEnabled = curveEffect.IsEnabled,
                         EffectLength = curveEffect.EffectLength,
                         EffectSpeed = curveEffect.EffectSpeed,
                         NumberOfPixels = curveEffect.NumberOfPixels,
@@ -53,6 +54,7 @@ namespace NeoPixelServer.Controllers
                 if (oldEffect is CurveEffect oldCurveEffect)
                 {
                     oldCurveEffect.EffectSpeed = curveEffect.EffectSpeed;
+                    oldCurveEffect.IsEnabled = curveEffect.IsEnabled;
                     oldCurveEffect.EffectLength = curveEffect.EffectLength;
                     oldCurveEffect.Name = curveEffect.Name;
                     oldCurveEffect.NumberOfPixels = curveEffect.NumberOfPixels;

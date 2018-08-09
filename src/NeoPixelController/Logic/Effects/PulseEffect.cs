@@ -12,6 +12,7 @@ namespace NeoPixelController.Logic.Effects
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string Name { get; set; } = nameof(PulseEffect);
+        public bool IsEnabled { get; set; } = true;
         public int SkipPixels { get; set; }
         public int NumberOfPixels { get; set; }
         public IColorProvider ColorProvider { get; set; }

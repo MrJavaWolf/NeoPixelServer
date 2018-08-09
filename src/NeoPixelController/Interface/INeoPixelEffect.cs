@@ -9,6 +9,7 @@ namespace NeoPixelController.Interface
     {
         Guid Id { get; }
         string Name { get; set; }
+        bool IsEnabled { get; set; }
 
         void Enter(EffectTime time);
         void Update(EffectTime time);
