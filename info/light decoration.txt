@@ -1,17 +1,15 @@
 24 meters
-16 strips in total 
-8 each way 
 Fade Candy can take 64 pixel per channel and have 8 channels 
 Each strip should be 10.6 cm from eachother
 
 - - - 60 pr m - - - 
-each strip is: 180
-Fadecandy give: 2 channels på strip
-1440 neopixels
+45 pixels per strip
+32 strips 
+Total: 1440 neopixels
 144 watt
-90 pixels per strip
-4 drivers
+4 fadecandy drivers
 1 controller
-bytes per page: 4320
+Each fadecrandy driver will handle 8 - 45 pixel strips 
+Bytes per page: 4320
 Framerate (30): 129.600 bytes per second
 Framerate (60): 259.200 bytes per second

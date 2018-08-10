@@ -4,6 +4,7 @@ using NeoPixelController.Logic.ColorProviders;
 using NeoPixelController.Logic.Effects;
 using NeoPixelController.Model;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -29,68 +30,75 @@ namespace NeoPixelController
         {
             IsRunning = true;
             Startup();
-            var strip = CreateStrip();
-            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 0, 64, 10, 5)
+            IEnumerable<NeoPixelDriver> drivers = CreateNeoPixelDrivers(new string[] { "TTYXKIYOFFPQAOFX" }, 7, 45);
+            effectController.AddEffect(new CurveEffect(drivers, new RainbowColorProvider(0.2f), 0, 45, 10, 5)
             {
                 Name = "Rainbow"
             });
-            effectController.AddEffect(new CurveEffect(strip, new RainbowColorProvider(0.2f), 30, 50, 5, 1)
+            effectController.AddEffect(new CurveEffect(drivers, new RainbowColorProvider(0.2f), 30, 45, 5, 1)
             {
                 Name = "Small slow rainbow",
                 IsEnabled = false
             });
-            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Green), 0, 64, 13, 3)
+            effectController.AddEffect(new CurveEffect(drivers, new StaticColorProvider(Color.Green), 0, 45, 13, 3)
             {
                 Name = "Green",
                 IsEnabled = false
             });
-            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Red), 0, 64, 10, 7)
+            effectController.AddEffect(new CurveEffect(drivers, new StaticColorProvider(Color.Red), 0, 45, 10, 7)
             {
                 Name = "Red",
                 IsEnabled = false
             });
-            effectController.AddEffect(new CurveEffect(strip, new StaticColorProvider(Color.Blue), 0, 64, 7, 5)
+            effectController.AddEffect(new CurveEffect(drivers, new StaticColorProvider(Color.Blue), 0, 45, 7, 5)
             {
                 Name = "Blue",
                 IsEnabled = false
             });
-            //effectController.AddEffect(new FullColorEffect(strip, new RainbowColorProvider(0.1f)));
             bool wasPreviousBlack = false;
             while (IsRunning)
             {
-                ResetColor(strip);
+                ResetColor(drivers);
                 effectController.RunEffect();
-                if (!IsBlack(strip) || !wasPreviousBlack)
+                if (!IsBlack(drivers) || !wasPreviousBlack)
                 {
-                    neoPixelSender.Send(strip);
+                    neoPixelSender.Send(drivers);
                 }
-                wasPreviousBlack = IsBlack(strip);
-                
+                wasPreviousBlack = IsBlack(drivers);
+
                 await Task.Delay(15);
             }
             await Task.FromResult(0);
         }
 
-        private void ResetColor(NeoPixelStrip strip)
+        private void ResetColor(IEnumerable<NeoPixelDriver> drivers)
         {
-            for (int i = 0; i < strip.Pixels.Count; i++)
+            foreach (var driver in drivers)
             {
-                strip.Pixels[i] = Color.Black;
+                foreach (var strip in driver.Strips)
+                {
+                    for (int i = 0; i < strip.Pixels.Count; i++)
+                    {
+                        strip.Pixels[i] = Color.Black;
+                    }
+                }
             }
         }
 
-        private bool IsBlack(NeoPixelStrip strip)
+        private bool IsBlack(IEnumerable<NeoPixelDriver> drivers)
         {
-            bool isBlack = true;
-            for (int i = 0; i < strip.Pixels.Count; i++)
+            foreach (var driver in drivers)
             {
-                if (strip.Pixels[i] != Color.Black)
+                foreach (var strip in driver.Strips)
                 {
-                    isBlack = false;
-                    break;
+                    foreach (var pixel in strip.Pixels)
+                    {
+                        if (pixel != Color.Black)
+                            return false;
+                    }
                 }
             }
-            return isBlack;
+            return true;
         }
 
         private void Startup()
@@ -110,19 +118,30 @@ namespace NeoPixelController
             await Task.FromResult(0);
         }
 
-
-        private NeoPixelStrip CreateStrip()
+        private IEnumerable<NeoPixelDriver> CreateNeoPixelDrivers(
+            IEnumerable<string> driverNames,
+            int stripsPerDriver,
+            int pixelsPerStrip)
         {
-            NeoPixelStrip strip = new NeoPixelStrip
+            List<NeoPixelDriver> drivers = new List<NeoPixelDriver>();
+            foreach (var driverName in driverNames)
             {
-                DeviceName = "TTYXKIYOFFPQAOFX"
-            };
-
-            for (int i = 0; i < 64; i++)
-            {
-                strip.Pixels.Add(Color.Black);
+                var driver = new NeoPixelDriver()
+                {
+                    Name = driverName
+                };
+                for (int i = 0; i < stripsPerDriver; i++)
+                {
+                    var strip = new NeoPixelStrip();
+                    for (int j = 0; j < pixelsPerStrip; j++)
+                    {
+                        strip.Pixels.Add(Color.Black);
+                    }
+                    driver.Strips.Add(strip);
+                }
+                drivers.Add(driver);
             }
-            return strip;
+            return drivers;
         }
     }
 }

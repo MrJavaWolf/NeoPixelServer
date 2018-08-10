@@ -23,5 +23,9 @@ namespace NeoPixelController.Logic.ColorProviders
         {
             return Color;
         }
+
+        public void Update(EffectTime time)
+        {
+        }
     }
 }

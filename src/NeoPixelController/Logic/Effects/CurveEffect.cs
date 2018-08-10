@@ -21,18 +21,18 @@ namespace NeoPixelController.Logic.Effects
         public float EffectSpeed { get; set; }
         public float Intensity { get; set; } = 1;
 
-        private readonly NeoPixelStrip strip;
+        private readonly IEnumerable<NeoPixelDriver> drivers;
         private float offset = 0;
 
         public CurveEffect(
-            NeoPixelStrip strip,
+            IEnumerable<NeoPixelDriver> drivers,
             IColorProvider colorProvider,
             int AreaStartPosition,
             int AreaLength,
             int effectLength,
             float speed)
         {
-            this.strip = strip;
+            this.drivers = drivers;
             this.ColorProvider = colorProvider;
             this.AreaStartPosition = AreaStartPosition;
             this.AreaLength = AreaLength;
@@ -62,15 +62,23 @@ namespace NeoPixelController.Logic.Effects
 
         public void Update(EffectTime time)
         {
-            InterpolationEffect.Apply(
-                Interpolator,
-                strip,
-                ColorProvider.GetColor(time),
-                offset,
-                Intensity,
-                AreaStartPosition,
-                AreaLength,
-                EffectLength);
+            foreach (var driver in drivers)
+            {
+                foreach (var strip in driver.Strips)
+                {
+                    InterpolationEffect.Apply(
+                     Interpolator,
+                     strip,
+                     ColorProvider.GetColor(time),
+                     offset,
+                     Intensity,
+                     AreaStartPosition,
+                     AreaLength,
+                     EffectLength);
+                }
+            }
+
+            ColorProvider.Update(time);
             offset += EffectSpeed * time.DeltaTime / 1000.0f;
         }
     }

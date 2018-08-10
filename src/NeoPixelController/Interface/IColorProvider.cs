@@ -11,5 +11,6 @@ namespace NeoPixelController.Interface
         Guid Id { get; }
         string Name { get; set; }
         Color GetColor(EffectTime time);
+        void Update(EffectTime time);
     }
 }
