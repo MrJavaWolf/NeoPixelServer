@@ -14,6 +14,7 @@ namespace NeoPixelController.Logic.Effects
         public string Name { get; set; } = nameof(FullColorEffect);
         public bool IsEnabled { get; set; } = true;
         public IColorProvider ColorProvider { get; set; }
+        public float Intensity { get; set; } = 1;
         private readonly NeoPixelStrip strip;
 
         public FullColorEffect(NeoPixelStrip strip, IColorProvider colorProvider)
@@ -34,7 +35,10 @@ namespace NeoPixelController.Logic.Effects
             
             for (int i = 0; i < strip.Pixels.Count; i++)
             {
-                strip.Pixels[i] = strip.Pixels[i].Add(color);
+                strip.Pixels[i] = strip.Pixels[i].Add(Color.FromArgb(
+                    (byte)(color.R * Intensity),
+                    (byte)(color.G * Intensity),
+                    (byte)(color.B * Intensity)));
             }
         }
 

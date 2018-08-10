@@ -36,13 +36,19 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="PixelStartPosition">Area Start Position</label>
-            <input class="form-control" asp-for="PixelStartPosition" aria-describedby="PixelStartPositionHelp">
+            <label asp-for="Intensity">Intensity</label>
+            <input class="form-control" asp-for="Intensity" aria-describedby="IntensityHelp">
+            <small id="IntensityHelp" class="form-text text-muted">How bright the effect is (0 = off, 1 = full brightness).</small>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="AreaStartPosition">Area Start Position</label>
+            <input class="form-control" asp-for="AreaStartPosition" aria-describedby="PixelStartPositionHelp">
             <small id="PixelStartPositionHelp" class="form-text text-muted">How far in the effect should start.</small>
         </div>
         <div class="form-group">
-            <label asp-for="NumberOfPixels">Area Length Position</label>
-            <input class="form-control" asp-for="NumberOfPixels" aria-describedby="NumberOfPixelsHelp">
+            <label asp-for="AreaLength">Area Length Position</label>
+            <input class="form-control" asp-for="AreaLength" aria-describedby="NumberOfPixelsHelp">
             <small id="NumberOfPixelsHelp" class="form-text text-muted">How long the effect area should be.</small>
         </div>
         <div class="form-group">

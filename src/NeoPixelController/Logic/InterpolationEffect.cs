@@ -18,12 +18,12 @@ namespace NeoPixelController.Logic
             NeoPixelStrip toStrip,
             Color color,
             float time,
-            float intensityDamping,
+            float intensity,
             int areaStartPosition,
             int areaLength,
             int effectLength)
         {
-            var intensityMultiplier = (1 - intensityDamping);
+            
             var start = time % areaLength;
 
             int startPixel = areaStartPosition + (int)start;
@@ -42,7 +42,7 @@ namespace NeoPixelController.Logic
                 if (time > 0) //Time is going forward
                     t = 1 - t;
                 var interpolation = interpolator.Interpolate(t);
-                float colorIntensity = (float)MathUtil.Clamp(0, 1, interpolation * intensityMultiplier);
+                float colorIntensity = (float)MathUtil.Clamp(0, 1, interpolation * intensity);
 
                 int index = (startPixel + i) % areaLength;
                 if (index < areaStartPosition) index += areaStartPosition;

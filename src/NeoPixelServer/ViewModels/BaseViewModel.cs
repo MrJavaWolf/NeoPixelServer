@@ -10,5 +10,6 @@ namespace NeoPixelServer.ViewModels
         public Guid Id { get; set; }
         public string Name { get; set; }
         public bool IsEnabled { get; set; }
+        public float Intensity { get; set; }
     }
 }

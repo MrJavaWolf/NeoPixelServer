@@ -13,10 +13,11 @@ namespace NeoPixelController.Logic.Effects
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string Name { get; set; } = nameof(PulseEffect);
         public bool IsEnabled { get; set; } = true;
-        public int SkipPixels { get; set; }
-        public int NumberOfPixels { get; set; }
+        public int AreaStartPosition { get; set; }
+        public int AreaLength { get; set; }
         public IColorProvider ColorProvider { get; set; }
         public float EffectSpeed { get; set; }
+        public float Intensity { get; set; } = 1;
 
         private readonly NeoPixelStrip strip;
         private float offset = 0;
@@ -29,9 +30,9 @@ namespace NeoPixelController.Logic.Effects
             float speed)
         {
             this.strip = strip;
-            this.SkipPixels = skipPixels;
+            this.AreaStartPosition = skipPixels;
             this.ColorProvider = colorProvider;
-            this.NumberOfPixels = numberOfPixels;
+            this.AreaLength = numberOfPixels;
             this.EffectSpeed = speed;
         }
 
@@ -47,16 +48,16 @@ namespace NeoPixelController.Logic.Effects
 
         public void Update(EffectTime time)
         {
-            for (int i = SkipPixels; i < strip.Pixels.Count && i < SkipPixels + NumberOfPixels; i++)
+            for (int i = AreaStartPosition; i < strip.Pixels.Count && i < AreaStartPosition + AreaLength; i++)
             {
                 double rawCalculation = strip.Pixels.Count / (double)i;
                 Color color = ColorProvider.GetColor(time);
                 Color c = Color.FromArgb(
-                    (byte)(color.R * rawCalculation),
-                    (byte)(color.G * rawCalculation),
-                    (byte)(color.B * rawCalculation));
-                strip.Pixels[SkipPixels + (i + (int)offset) % NumberOfPixels] = 
-                    strip.Pixels[SkipPixels + (i + (int)offset) % NumberOfPixels].Add(c);
+                    (byte)(color.R * rawCalculation * Intensity),
+                    (byte)(color.G * rawCalculation * Intensity),
+                    (byte)(color.B * rawCalculation * Intensity));
+                strip.Pixels[AreaStartPosition + (i + (int)offset) % AreaLength] = 
+                    strip.Pixels[AreaStartPosition + (i + (int)offset) % AreaLength].Add(c);
             }
 
             offset += EffectSpeed * time.DeltaTime / 1000.0f;

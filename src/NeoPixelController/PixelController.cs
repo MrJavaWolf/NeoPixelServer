@@ -55,17 +55,42 @@ namespace NeoPixelController
                 IsEnabled = false
             });
             //effectController.AddEffect(new FullColorEffect(strip, new RainbowColorProvider(0.1f)));
+            bool wasPreviousBlack = false;
             while (IsRunning)
             {
-                for (int i = 0; i < strip.Pixels.Count; i++)
-                {
-                    strip.Pixels[i] = Color.Black;
-                }
+                ResetColor(strip);
                 effectController.RunEffect();
-                neoPixelSender.Send(strip);
+                if (!IsBlack(strip) || !wasPreviousBlack)
+                {
+                    neoPixelSender.Send(strip);
+                }
+                wasPreviousBlack = IsBlack(strip);
+                
                 await Task.Delay(15);
             }
             await Task.FromResult(0);
+        }
+
+        private void ResetColor(NeoPixelStrip strip)
+        {
+            for (int i = 0; i < strip.Pixels.Count; i++)
+            {
+                strip.Pixels[i] = Color.Black;
+            }
+        }
+
+        private bool IsBlack(NeoPixelStrip strip)
+        {
+            bool isBlack = true;
+            for (int i = 0; i < strip.Pixels.Count; i++)
+            {
+                if (strip.Pixels[i] != Color.Black)
+                {
+                    isBlack = false;
+                    break;
+                }
+            }
+            return isBlack;
         }
 
         private void Startup()

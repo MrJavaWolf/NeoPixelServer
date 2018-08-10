@@ -15,10 +15,11 @@ namespace NeoPixelController.Logic.Effects
         public bool IsEnabled { get; set; } = true;
         public IInterpolation Interpolator { get; set; }
         public IColorProvider ColorProvider { get; set; }
-        public int PixelStartPosition { get; set; }
-        public int NumberOfPixels { get; set; }
+        public int AreaStartPosition { get; set; }
+        public int AreaLength { get; set; }
         public int EffectLength { get; set; }
-        public float EffectSpeed { get; set; }     
+        public float EffectSpeed { get; set; }
+        public float Intensity { get; set; } = 1;
 
         private readonly NeoPixelStrip strip;
         private float offset = 0;
@@ -26,16 +27,16 @@ namespace NeoPixelController.Logic.Effects
         public CurveEffect(
             NeoPixelStrip strip,
             IColorProvider colorProvider,
-            int pixelStartPosition,
-            int numberOfPixels,
+            int AreaStartPosition,
+            int AreaLength,
             int effectLength,
             float speed)
         {
             this.strip = strip;
             this.ColorProvider = colorProvider;
-            this.NumberOfPixels = numberOfPixels;
+            this.AreaStartPosition = AreaStartPosition;
+            this.AreaLength = AreaLength;
             this.EffectLength = effectLength;
-            this.PixelStartPosition = pixelStartPosition;
             this.EffectSpeed = speed;
 
             Curve curve = new Curve();
@@ -66,9 +67,9 @@ namespace NeoPixelController.Logic.Effects
                 strip,
                 ColorProvider.GetColor(time),
                 offset,
-                0,
-                PixelStartPosition,
-                NumberOfPixels,
+                Intensity,
+                AreaStartPosition,
+                AreaLength,
                 EffectLength);
             offset += EffectSpeed * time.DeltaTime / 1000.0f;
         }

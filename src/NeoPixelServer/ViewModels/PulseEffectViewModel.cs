@@ -8,8 +8,8 @@ namespace NeoPixelServer.ViewModels
     public class PulseEffectViewModel : BaseViewModel
     {
         public BaseColorProviderViewModel ColorProvider { get; set; }
-        public int SkipPixels { get; set; }
-        public int NumberOfPixels { get; set; }
+        public int AreaStartPosition { get; set; }
+        public int AreaLength { get; set; }
         public float EffectSpeed { get; set; }
     }
 }

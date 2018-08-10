@@ -28,12 +28,13 @@ namespace NeoPixelServer.Controllers
                 {
                     viewModels.Add(new CurveEffectViewModel()
                     {
+                        Intensity = curveEffect.Intensity,
                         Id = curveEffect.Id,
                         IsEnabled = curveEffect.IsEnabled,
                         EffectLength = curveEffect.EffectLength,
                         EffectSpeed = curveEffect.EffectSpeed,
-                        NumberOfPixels = curveEffect.NumberOfPixels,
-                        PixelStartPosition = curveEffect.PixelStartPosition,
+                        AreaLength = curveEffect.AreaLength,
+                        AreaStartPosition = curveEffect.AreaStartPosition,
                         Name = curveEffect.Name
                     });
                 }
@@ -57,8 +58,9 @@ namespace NeoPixelServer.Controllers
                     oldCurveEffect.IsEnabled = curveEffect.IsEnabled;
                     oldCurveEffect.EffectLength = curveEffect.EffectLength;
                     oldCurveEffect.Name = curveEffect.Name;
-                    oldCurveEffect.NumberOfPixels = curveEffect.NumberOfPixels;
-                    oldCurveEffect.PixelStartPosition = curveEffect.PixelStartPosition;
+                    oldCurveEffect.AreaLength = curveEffect.AreaLength;
+                    oldCurveEffect.AreaStartPosition = curveEffect.AreaStartPosition;
+                    oldCurveEffect.Intensity = curveEffect.Intensity;
                 }
             }
             return Redirect("index");
