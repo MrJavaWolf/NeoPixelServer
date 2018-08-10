@@ -50,17 +50,16 @@ namespace NeoPixelServer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var effects = effectController.GetEffects();
-                var oldEffect = effects.Where(e => e.Id == curveEffect.Id).FirstOrDefault();
-                if (oldEffect is CurveEffect oldCurveEffect)
+                var effect = effectController.GetEffect<CurveEffect>(curveEffect.Id);
+                if (effect != null)
                 {
-                    oldCurveEffect.EffectSpeed = curveEffect.EffectSpeed;
-                    oldCurveEffect.IsEnabled = curveEffect.IsEnabled;
-                    oldCurveEffect.EffectLength = curveEffect.EffectLength;
-                    oldCurveEffect.Name = curveEffect.Name;
-                    oldCurveEffect.AreaLength = curveEffect.AreaLength;
-                    oldCurveEffect.AreaStartPosition = curveEffect.AreaStartPosition;
-                    oldCurveEffect.Intensity = curveEffect.Intensity;
+                    effect.EffectSpeed = curveEffect.EffectSpeed;
+                    effect.IsEnabled = curveEffect.IsEnabled;
+                    effect.EffectLength = curveEffect.EffectLength;
+                    effect.Name = curveEffect.Name;
+                    effect.AreaLength = curveEffect.AreaLength;
+                    effect.AreaStartPosition = curveEffect.AreaStartPosition;
+                    effect.Intensity = curveEffect.Intensity;
                 }
             }
             return Redirect("index");

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using WebSocketSharp;
@@ -42,6 +43,21 @@ namespace NeoPixelController
         public IReadOnlyList<INeoPixelEffect> GetEffects()
         {
             return effects;
+        }
+
+        public INeoPixelEffect GetEffect(Guid Id)
+        {
+            return GetEffects().Where(e => e.Id == Id).FirstOrDefault();
+        }
+
+        public T GetEffect<T>(Guid Id) 
+            where T : INeoPixelEffect
+        {
+            var effect = GetEffects().Where(e => e.Id == Id).FirstOrDefault();
+            if (effect is T effectWithType)
+                return effectWithType;
+            else
+                return default(T);
         }
 
         private void UpdateTime()
