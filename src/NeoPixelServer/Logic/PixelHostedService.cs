@@ -22,7 +22,17 @@ namespace NeoPixelServer.Logic
            Console.WriteLine("Starting PixelController...");
             new Thread(async () =>
             {
-                await pixelController.StartAsync(cancellationToken);
+                try
+                {
+                    await pixelController.StartAsync(cancellationToken);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("Error in PixelController:");
+                    Console.WriteLine(e.ToString());
+                    throw;
+                }
+                
             }).Start();
            
 
