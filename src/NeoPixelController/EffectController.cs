@@ -37,6 +37,13 @@ namespace NeoPixelController
             effects.Remove(effect);
         }
 
+        public void RemoveEffect(Guid Id)
+        {
+            var effect = GetEffects().Where(e => e.Id == Id).FirstOrDefault();
+            if (effect != null) effects.Remove(effect);
+        }
+
+
         public IReadOnlyList<INeoPixelEffect> GetEffects()
         {
             return effects;
@@ -47,7 +54,7 @@ namespace NeoPixelController
             return GetEffects().Where(e => e.Id == Id).FirstOrDefault();
         }
 
-        public T GetEffect<T>(Guid Id) 
+        public T GetEffect<T>(Guid Id)
             where T : INeoPixelEffect
         {
             var effect = GetEffects().Where(e => e.Id == Id).FirstOrDefault();
