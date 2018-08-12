@@ -1,6 +1,7 @@
 ﻿using NeoPixelController.Model;
 using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using System.Text;
 using WebSocketSharp;
 
@@ -9,16 +10,21 @@ namespace NeoPixelController.Logic
     public class NeoPixelSender
     {
         private WebSocket webSocket;
+        private TcpClient client;
+        private NetworkStream opcStream;
         private readonly string url;
-
-        public NeoPixelSender(string url)
+        private readonly int port;
+        public NeoPixelSender(string url, int port)
         {
             this.url = url;
+            this.port = port;
         }
 
         public void Connect()
         {
-            webSocket = new WebSocket(url);
+            client = new TcpClient("192.168.0.101", port);
+            opcStream = client.GetStream();
+            webSocket = new WebSocket($"ws://{url}:{port}");
             webSocket.OnClose += WebSocket_OnClose;
             webSocket.OnMessage += WebSocket_OnMessage;
             webSocket.OnOpen += WebSocket_OnOpen;
@@ -58,7 +64,8 @@ namespace NeoPixelController.Logic
 
         public void Send(IEnumerable<NeoPixelDriver> drivers)
         {
-            webSocket.Send(GetBytes(drivers));
+            var bytes = GetBytes(drivers);
+            opcStream.Write(bytes, 0, bytes.Length);
         }
 
         private byte[] GetBytes(IEnumerable<NeoPixelDriver> drivers)
@@ -66,6 +73,11 @@ namespace NeoPixelController.Logic
             byte[] bytes = new byte[1 + 1 + 2 + CalculateNumberOfPixels(drivers) * 3];
             bytes[0] = 0;
             bytes[1] = CommandType.Set8BitPixelColours;
+
+            ushort length = (ushort)(bytes.Length - 4);
+            bytes[2] = (byte)(length >> 8);
+            bytes[3] = (byte)(length & 0x00FF);
+
             //bytes[2] = ; - Do not set
             //bytes[3] = ; - Do not set
             int stripOffset = 0;

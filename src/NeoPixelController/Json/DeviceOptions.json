@@ -2,7 +2,7 @@
   "type": "device_options",
   "device": {
     "type": "fadecandy",
-    "serial": "TTYXKIYOFFPQAOFX"
+    "serial": "<INSERT_SERIAL_HERE>"
   },
   "options": {
     "led": true,

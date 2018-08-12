@@ -20,9 +20,13 @@ namespace NeoPixelController
         private NeoPixelSender neoPixelSender;
         private EffectController effectController;
 
+        private readonly string[] Devices = new string[] {
+            "TTYXKIYOFFPQAOFX" ,
+            "YGZWFVBZJZHOSYVF" };
+
         public PixelController(EffectController effectController)
         {
-            neoPixelSender = new NeoPixelSender("ws://192.168.0.101");
+            neoPixelSender = new NeoPixelSender("192.168.0.101", 80);
             this.effectController = effectController;
         }
 
@@ -30,7 +34,7 @@ namespace NeoPixelController
         {
             IsRunning = true;
             Startup();
-            IEnumerable<NeoPixelDriver> drivers = CreateNeoPixelDrivers(new string[] { "TTYXKIYOFFPQAOFX" }, 7, 45);
+            IEnumerable<NeoPixelDriver> drivers = CreateNeoPixelDrivers(Devices, 8, 45);
             effectController.AddEffect(new CurveEffect(drivers, new RainbowColorProvider(0.2f), 0, 45, 10, 5)
             {
                 Name = "Rainbow"
@@ -53,6 +57,11 @@ namespace NeoPixelController
             effectController.AddEffect(new CurveEffect(drivers, new StaticColorProvider(Color.Blue), 0, 45, 7, 5)
             {
                 Name = "Blue",
+                IsEnabled = false
+            });
+            effectController.AddEffect(new FullColorEffect(drivers, new RainbowColorProvider(0.2f))
+            {
+                Name = "Full white",
                 IsEnabled = false
             });
             bool wasPreviousBlack = false;
@@ -109,7 +118,12 @@ namespace NeoPixelController
             //get the folder that's in
             string theDirectory = Path.GetDirectoryName(fullPath);
             neoPixelSender.Connect();
-            neoPixelSender.SendSettings(File.ReadAllText(Path.Combine(theDirectory, "Json", "SetDeviceOptions.json")));
+            string rawSettings = File.ReadAllText(Path.Combine(theDirectory, "Json", "DeviceOptions.json"));
+            foreach (var device in Devices)
+            {
+                string settings = rawSettings.Replace("<INSERT_SERIAL_HERE>", device);
+                neoPixelSender.SendSettings(settings);
+            }
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

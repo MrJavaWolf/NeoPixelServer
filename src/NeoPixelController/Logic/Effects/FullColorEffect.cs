@@ -15,11 +15,11 @@ namespace NeoPixelController.Logic.Effects
         public bool IsEnabled { get; set; } = true;
         public IColorProvider ColorProvider { get; set; }
         public float Intensity { get; set; } = 1;
-        private readonly NeoPixelStrip strip;
+        private readonly IEnumerable<NeoPixelDriver> drivers;
 
-        public FullColorEffect(NeoPixelStrip strip, IColorProvider colorProvider)
+        public FullColorEffect(IEnumerable<NeoPixelDriver> drivers, IColorProvider colorProvider)
         {
-            this.strip = strip;
+            this.drivers = drivers;
             this.ColorProvider = colorProvider;
         }
 
@@ -30,16 +30,22 @@ namespace NeoPixelController.Logic.Effects
 
         public void Update(EffectTime time)
         {
-            
+
             Color color = ColorProvider.GetColor(time);
-            
-            for (int i = 0; i < strip.Pixels.Count; i++)
+            foreach (var driver in drivers)
             {
-                strip.Pixels[i] = strip.Pixels[i].Add(Color.FromArgb(
-                    (byte)(color.R * Intensity),
-                    (byte)(color.G * Intensity),
-                    (byte)(color.B * Intensity)));
+                foreach (var strip in driver.Strips)
+                {
+                    for (int i = 0; i < strip.Pixels.Count; i++)
+                    {
+                        strip.Pixels[i] = strip.Pixels[i].Add(Color.FromArgb(
+                            (byte)(color.R * Intensity),
+                            (byte)(color.G * Intensity),
+                            (byte)(color.B * Intensity)));
+                    }
+                }
             }
+            ColorProvider.Update(time);
         }
 
         public void Exit(EffectTime time)
