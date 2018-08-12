@@ -25,12 +25,12 @@ pipeline {
 		stage('Deploying') {
 			steps { 
 				echo 'Stops the old process...'
-				sh 'sudo systemctl stop NanoPixelServer.service'
+				sh 'sudo systemctl stop NeoPixelServer.service'
 				echo 'Installs the new binaries'
 				sh 'sudo rm -rf /opt/NeoPixelServer/bin'
 				sh 'sudo unzip bin.zip -d /opt/NeoPixelServer'
 				echo 'Starts the application'
-				sh 'sudo systemctl start NanoPixelServer.service'
+				sh 'sudo systemctl start NeoPixelServer.service'
 			}
 		}
     }
