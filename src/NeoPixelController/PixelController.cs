@@ -19,6 +19,7 @@ namespace NeoPixelController
         public bool IsRunning { get; private set; }
         private NeoPixelSender neoPixelSender;
         private EffectController effectController;
+        private TimeController timeController = new TimeController();
 
         private readonly string[] Devices = new string[] {
             "TTYXKIYOFFPQAOFX" ,
@@ -70,7 +71,8 @@ namespace NeoPixelController
             while (IsRunning)
             {
                 ResetColor(drivers);
-                effectController.RunEffect();
+                var time = await timeController.UpdateTime();
+                effectController.RunEffect(time);
                 if (!IsBlack(drivers) || !wasPreviousBlack)
                 {
                     neoPixelSender.Send(drivers);

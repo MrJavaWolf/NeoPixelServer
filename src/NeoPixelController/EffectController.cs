@@ -15,12 +15,9 @@ namespace NeoPixelController
     public class EffectController
     {
         private List<INeoPixelEffect> effects = new List<INeoPixelEffect>();
-        private Stopwatch stopwatch = new Stopwatch();
-        private EffectTime time = new EffectTime();
 
-        internal void RunEffect()
+        internal void RunEffect(EffectTime time)
         {
-            UpdateTime();
             foreach (var effect in effects)
             {
                 if (effect.IsEnabled)
@@ -60,22 +57,5 @@ namespace NeoPixelController
                 return default(T);
         }
 
-        private void UpdateTime()
-        {
-            if (!stopwatch.IsRunning)
-            {
-                stopwatch.Start();
-                time.DeltaTime = 16;
-                time.Time = 0;
-            }
-            else
-            {
-                var eclipsedMilliseconds = stopwatch.ElapsedMilliseconds;
-                //eclipsedMilliseconds = Math.Min(eclipsedMilliseconds - time.Time, time.Time + 16);
-                time.DeltaTime = eclipsedMilliseconds - time.Time;
-                time.Time = eclipsedMilliseconds;
-                //Console.WriteLine("time.DeltaTime: "+ time.DeltaTime);
-            }
-        }
     }
 }
