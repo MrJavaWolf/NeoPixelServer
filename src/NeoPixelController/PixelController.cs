@@ -20,6 +20,8 @@ namespace NeoPixelController
         private NeoPixelSender neoPixelSender;
         private EffectController effectController;
         private TimeController timeController = new TimeController();
+        private EffectFactory effectFactory;
+        private ResourceLoader resourceLoader = new ResourceLoader();
 
         private readonly string[] Devices = new string[] {
             "TTYXKIYOFFPQAOFX" ,
@@ -31,7 +33,7 @@ namespace NeoPixelController
         {
             neoPixelSender = new NeoPixelSender("192.168.0.101", 80);
             this.effectController = effectController;
-            
+
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -39,41 +41,79 @@ namespace NeoPixelController
             IsRunning = true;
             Startup();
             IEnumerable<NeoPixelDriver> drivers = CreateNeoPixelDrivers(Devices, 8, 45);
-            effectController.AddEffect(new CurveEffect(drivers, new RainbowColorProvider(0.2f), 0, 45, 10, 5)
-            {
-                Name = "Rainbow",
-                IsEnabled = true
-            });
-            effectController.AddEffect(new CurveEffect(drivers, new RainbowColorProvider(0.2f), 30, 45, 5, 1)
-            {
-                Name = "Small slow rainbow",
-                IsEnabled = false
-            });
-            effectController.AddEffect(new CurveEffect(drivers, new StaticColorProvider(Color.Green), 0, 45, 13, 3)
-            {
-                Name = "Green",
-                IsEnabled = false
-            });
-            effectController.AddEffect(new CurveEffect(drivers, new StaticColorProvider(Color.Red), 0, 45, 10, 7)
-            {
-                Name = "Red",
-                IsEnabled = false
-            });
-            effectController.AddEffect(new CurveEffect(drivers, new StaticColorProvider(Color.Blue), 0, 45, 7, 5)
-            {
-                Name = "Blue",
-                IsEnabled = false
-            });
+            effectFactory = new EffectFactory(drivers);
+
+            effectController.AddEffect(effectFactory.CreateDefaultCurveEffect(
+                name: "Rainbow",
+                isEnabled: false,
+                colorProvider: new RainbowColorProvider(0.2f),
+                areaStartPosition: 0,
+                areaLength: 45,
+                effectLength: 10,
+                speed: 5
+                ));
+
+            effectController.AddEffect(effectFactory.CreateDefaultCurveEffect(
+               name: "Small slow rainbow",
+               isEnabled: false,
+               colorProvider: new RainbowColorProvider(0.2f),
+               areaStartPosition: 30,
+               areaLength: 15,
+               effectLength: 5,
+               speed: 1
+               ));
+
+
+            effectController.AddEffect(effectFactory.CreateDefaultCurveEffect(
+               name: "Green",
+               isEnabled: false,
+               colorProvider: new StaticColorProvider(Color.Green),
+               areaStartPosition: 0,
+               areaLength: 45,
+               effectLength: 13,
+               speed: 3
+               ));
+
+
+            effectController.AddEffect(effectFactory.CreateDefaultCurveEffect(
+                name: "Red",
+                isEnabled: false,
+                colorProvider: new StaticColorProvider(Color.Red),
+                areaStartPosition: 0,
+                areaLength: 45,
+                effectLength: 10,
+                speed: 7
+                ));
+
+            effectController.AddEffect(effectFactory.CreateDefaultCurveEffect(
+                name: "Blue",
+                isEnabled: false,
+                colorProvider: new StaticColorProvider(Color.Blue),
+                areaStartPosition: 0,
+                areaLength: 45,
+                effectLength: 7,
+                speed: 5
+                ));
+
             effectController.AddEffect(new FullColorEffect(drivers, new RainbowColorProvider(0.2f))
             {
                 Name = "Full white",
                 IsEnabled = false
             });
-            effectController.AddEffect(new WaveEffect(drivers)
-            {
-                IsEnabled = false
-            });
-            
+
+            effectController.AddEffect(effectFactory.CreateScrollEffectFromTestImage(
+                name: "Test image",
+                isEnabled: false,
+                speed: 10));
+
+            effectController.AddEffect(effectFactory.CreateScrollEffectFromFile(
+                name: "Color Wheel",
+                isEnabled: true,
+                horizontalDirection: false,
+                file: resourceLoader.CreateFullFilePath("colorwheel_line.png"),
+                speed: 500));
+
+
             bool wasPreviousBlack = false;
             while (IsRunning)
             {
@@ -85,8 +125,6 @@ namespace NeoPixelController
                     neoPixelSender.Send(drivers);
                 }
                 wasPreviousBlack = IsBlack(drivers);
-
-                await Task.Delay(15);
             }
             await Task.FromResult(0);
         }
@@ -123,13 +161,8 @@ namespace NeoPixelController
 
         private void Startup()
         {
-            //get the full location of the assembly with DaoTests in it
-            string fullPath = Assembly.GetExecutingAssembly().Location;
-
-            //get the folder that's in
-            string theDirectory = Path.GetDirectoryName(fullPath);
             neoPixelSender.Connect();
-            string rawSettings = File.ReadAllText(Path.Combine(theDirectory, "Json", "DeviceOptions.json"));
+            string rawSettings = resourceLoader.ReadSettings();
             foreach (var device in Devices)
             {
                 string settings = rawSettings.Replace("<INSERT_SERIAL_HERE>", device);

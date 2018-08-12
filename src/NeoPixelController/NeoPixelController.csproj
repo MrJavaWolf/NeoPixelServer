@@ -13,7 +13,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Json\DeviceOptions.json">
+    <None Update="Resources\colorwheel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\colorwheel_line.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\colorwheel_rotated.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\DeviceOptions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

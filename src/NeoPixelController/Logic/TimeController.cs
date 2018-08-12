@@ -43,7 +43,7 @@ namespace NeoPixelController.Logic
             await DoWait();
 
             var eclipsedMilliseconds = stopwatch.ElapsedMilliseconds;
-            eclipsedMilliseconds = Math.Min(eclipsedMilliseconds - time.Time, time.Time + 16);
+            //eclipsedMilliseconds = Math.Min(eclipsedMilliseconds - time.Time, time.Time + 16);
             time.DeltaTime = eclipsedMilliseconds - time.Time;
             time.Time = eclipsedMilliseconds;
             return time;
@@ -52,6 +52,7 @@ namespace NeoPixelController.Logic
         private async Task DoWait()
         {
             var timeUsed = stopwatch.ElapsedMilliseconds - time.Time;
+            //Console.WriteLine("Time used on logic: " + timeUsed);
             var sleepTime = Math.Max(0, TimeBetweenFrames - timeUsed);
             await Task.Delay((int)TimeBetweenFrames);
         }

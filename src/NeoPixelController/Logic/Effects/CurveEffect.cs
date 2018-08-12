@@ -15,10 +15,10 @@ namespace NeoPixelController.Logic.Effects
         public bool IsEnabled { get; set; } = true;
         public IInterpolation Interpolator { get; set; }
         public IColorProvider ColorProvider { get; set; }
-        public int AreaStartPosition { get; set; }
-        public int AreaLength { get; set; }
-        public int EffectLength { get; set; }
-        public float EffectSpeed { get; set; }
+        public int AreaStartPosition { get; set; } = 0;
+        public int AreaLength { get; set; } = 40;
+        public int EffectLength { get; set; } = 10;
+        public float EffectSpeed { get; set; } = 2;
         public float Intensity { get; set; } = 1;
 
         private readonly IEnumerable<NeoPixelDriver> drivers;
@@ -27,26 +27,11 @@ namespace NeoPixelController.Logic.Effects
         public CurveEffect(
             IEnumerable<NeoPixelDriver> drivers,
             IColorProvider colorProvider,
-            int AreaStartPosition,
-            int AreaLength,
-            int effectLength,
-            float speed)
+            IInterpolation interpolator)
         {
             this.drivers = drivers;
             this.ColorProvider = colorProvider;
-            this.AreaStartPosition = AreaStartPosition;
-            this.AreaLength = AreaLength;
-            this.EffectLength = effectLength;
-            this.EffectSpeed = speed;
-
-            Curve curve = new Curve();
-            curve.AddPoint(0, 0, 0);
-            curve.AddPoint(0.2, 1, 0);
-            //curve.AddPoint(0.5, 0.35, 0);
-            //curve.AddPoint(0.9, 0.25, 0);
-            curve.AddPoint(1, 0, 0);
-
-            this.Interpolator = CubicSpline.InterpolateHermite(curve.X.ToArray(), curve.Y.ToArray(), curve.W.ToArray());
+            this.Interpolator = interpolator;
         }
 
 
