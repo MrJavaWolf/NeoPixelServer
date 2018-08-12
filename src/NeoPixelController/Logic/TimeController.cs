@@ -43,7 +43,7 @@ namespace NeoPixelController.Logic
             await DoWait();
 
             var eclipsedMilliseconds = stopwatch.ElapsedMilliseconds;
-            //eclipsedMilliseconds = Math.Min(eclipsedMilliseconds - time.Time, time.Time + 16);
+            eclipsedMilliseconds = Math.Min(eclipsedMilliseconds - time.Time, time.Time + 16);
             time.DeltaTime = eclipsedMilliseconds - time.Time;
             time.Time = eclipsedMilliseconds;
             return time;

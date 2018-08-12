@@ -31,6 +31,7 @@ namespace NeoPixelController
         {
             neoPixelSender = new NeoPixelSender("192.168.0.101", 80);
             this.effectController = effectController;
+            
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -40,7 +41,8 @@ namespace NeoPixelController
             IEnumerable<NeoPixelDriver> drivers = CreateNeoPixelDrivers(Devices, 8, 45);
             effectController.AddEffect(new CurveEffect(drivers, new RainbowColorProvider(0.2f), 0, 45, 10, 5)
             {
-                Name = "Rainbow"
+                Name = "Rainbow",
+                IsEnabled = true
             });
             effectController.AddEffect(new CurveEffect(drivers, new RainbowColorProvider(0.2f), 30, 45, 5, 1)
             {
@@ -67,6 +69,11 @@ namespace NeoPixelController
                 Name = "Full white",
                 IsEnabled = false
             });
+            effectController.AddEffect(new WaveEffect(drivers)
+            {
+                IsEnabled = false
+            });
+            
             bool wasPreviousBlack = false;
             while (IsRunning)
             {
