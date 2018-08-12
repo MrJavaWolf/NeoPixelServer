@@ -22,7 +22,9 @@ namespace NeoPixelController
 
         private readonly string[] Devices = new string[] {
             "TTYXKIYOFFPQAOFX" ,
-            "YGZWFVBZJZHOSYVF" };
+            "YGZWFVBZJZHOSYVF",
+            "WULITTLBBXPYYYVJ",
+            "JJOBGWFBHVDSOMVZ"};
 
         public PixelController(EffectController effectController)
         {
