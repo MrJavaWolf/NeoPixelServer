@@ -1,0 +1,63 @@
+﻿@model NeoPixelServer.ViewModels.ScrollImageEffectViewModel
+
+
+<form asp-controller="Pixel" asp-action="UpdateScrollImageEffect" method="post">
+    <fieldset>
+        <div class="form-group">
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+        </div>
+        <legend>@Model.Name</legend>
+
+        <div class="form-group">
+            <span class="badge badge-pill badge-secondary">Scroll Image Effect</span>
+            @if (Model.IsEnabled)
+            {
+                <span class="badge badge-success">Enabled</span>
+            }
+            else
+            {
+                <span class="badge badge-danger">Disabled</span>
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" asp-for="IsEnabled" type="checkbox" aria-describedby="IsEnabledHelp">
+                <label class="form-check-label" asp-for="IsEnabled">Enable</label>
+                <small id="IsEnabledHelp" class="form-text text-muted">Enable/Disable the effect.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Name">Change Name</label>
+            <input class="form-control" asp-for="Name" aria-describedby="NameHelp">
+            <small id="NameHelp" class="form-text text-muted">Name of the effect.</small>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Intensity">Intensity</label>
+            <input class="form-control" asp-for="Intensity" aria-describedby="IntensityHelp">
+            <small id="IntensityHelp" class="form-text text-muted">How bright the effect is (0 = off, 1 = full brightness).</small>
+        </div>
+
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" asp-for="Horizontal" type="checkbox" aria-describedby="IsHorizontalHelp">
+                <label class="form-check-label" asp-for="Horizontal">Horizontal</label>
+                <small id="IsHorizontalHelp" class="form-text text-muted">Scroll horizontal (on) or vertial (off).</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Speed">Speed</label>
+            <input class="form-control" asp-for="Speed" aria-describedby="SpeedHelp">
+            <small id="SpeedHelp" class="form-text text-muted">How fast the effect is.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Apply</button>
+        <button type="reset" class="btn btn-outline-danger float-right" disabled>Delete</button>
+
+    </fieldset>
+</form>
+
+

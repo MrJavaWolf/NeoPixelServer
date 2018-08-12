@@ -28,14 +28,26 @@ namespace NeoPixelServer.Controllers
                 {
                     viewModels.Add(new CurveEffectViewModel()
                     {
-                        Intensity = curveEffect.Intensity,
                         Id = curveEffect.Id,
                         IsEnabled = curveEffect.IsEnabled,
+                        Name = curveEffect.Name,
+                        Intensity = curveEffect.Intensity,
                         EffectLength = curveEffect.EffectLength,
                         EffectSpeed = curveEffect.EffectSpeed,
                         AreaLength = curveEffect.AreaLength,
                         AreaStartPosition = curveEffect.AreaStartPosition,
-                        Name = curveEffect.Name
+                    });
+                }
+                else if(effect is ScrollImageEffect scrollImageEffect)
+                {
+                    viewModels.Add(new ScrollImageEffectViewModel()
+                    {
+                        Id = scrollImageEffect.Id,
+                        IsEnabled = scrollImageEffect.IsEnabled,
+                        Name = scrollImageEffect.Name,
+                        Intensity = scrollImageEffect.Intensity,
+                        Horizontal = scrollImageEffect.Horizontal,
+                        Speed= scrollImageEffect.Speed,
                     });
                 }
             }
@@ -53,28 +65,36 @@ namespace NeoPixelServer.Controllers
                 var effect = effectController.GetEffect<CurveEffect>(curveEffect.Id);
                 if (effect != null)
                 {
-                    effect.EffectSpeed = curveEffect.EffectSpeed;
                     effect.IsEnabled = curveEffect.IsEnabled;
-                    effect.EffectLength = curveEffect.EffectLength;
                     effect.Name = curveEffect.Name;
+                    effect.Intensity = curveEffect.Intensity;
+                    effect.EffectSpeed = curveEffect.EffectSpeed;
+                    effect.EffectLength = curveEffect.EffectLength;
                     effect.AreaLength = curveEffect.AreaLength;
                     effect.AreaStartPosition = curveEffect.AreaStartPosition;
-                    effect.Intensity = curveEffect.Intensity;
                 }
             }
-            return Redirect("index");
+            return Redirect(nameof(Index));
         }
 
-        public IActionResult SetColor()
+
+        [HttpPost]
+        public IActionResult UpdateScrollImageEffect(ScrollImageEffectViewModel scrollImageEffect)
         {
-            //pixelService.AnimationType = NeoPixelController.Model.AnimationType.SingleColor;
-            return Redirect("index");
+            if (ModelState.IsValid)
+            {
+                var effect = effectController.GetEffect<ScrollImageEffect>(scrollImageEffect.Id);
+                if (effect != null)
+                {
+                    effect.IsEnabled = scrollImageEffect.IsEnabled;
+                    effect.Name = scrollImageEffect.Name;
+                    effect.Intensity = scrollImageEffect.Intensity;
+                    effect.Speed = scrollImageEffect.Speed;
+                    effect.Horizontal = scrollImageEffect.Horizontal;
+                }
+            }
+            return Redirect(nameof(Index));
         }
 
-        public IActionResult Pulse()
-        {
-            //pixelService.AnimationType = NeoPixelController.Model.AnimationType.Pulse;
-            return Redirect("index");
-        }
     }
 }
