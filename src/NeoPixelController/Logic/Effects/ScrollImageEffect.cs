@@ -1,5 +1,4 @@
-﻿using ImageMagick;
-using NeoPixelController.Interface;
+﻿using NeoPixelController.Interface;
 using NeoPixelController.Logic.Extension;
 using NeoPixelController.Model;
 using System;
@@ -20,20 +19,14 @@ namespace NeoPixelController.Logic.Effects
         public bool Horizontal { get; set; } = true;
 
         private readonly IEnumerable<NeoPixelDriver> drivers;
-        private readonly byte[] pixels;
-        private readonly int width;
-        private readonly int height;
-        private readonly int channels;
+        private readonly Bitmap image;
 
         private float offset = 0;
 
-        public ScrollImageEffect(IEnumerable<NeoPixelDriver> drivers, byte[] pixels, int width, int height, int channels)
+        public ScrollImageEffect(IEnumerable<NeoPixelDriver> drivers, Bitmap image)
         {
             this.drivers = drivers;
-            this.pixels = pixels;
-            this.width = width;
-            this.height = height;
-            this.channels = channels;
+            this.image = image;
         }
 
 
@@ -48,23 +41,33 @@ namespace NeoPixelController.Logic.Effects
 
         public void Update(EffectTime time)
         {
-            int xOffset = (int)(offset % width);
-            int yOffset = (int)(offset % height);
+            int xOffset = (int)(offset % image.Width);
+            int yOffset = (int)(offset % image.Height);
             foreach (var driver in drivers)
             {
                 foreach (var strip in driver.Strips)
                 {
-                    var yStep = height / strip.Pixels.Count;
+                    var yStep = image.Height / strip.Pixels.Count;
                     for (int i = 0; i < strip.Pixels.Count; i++)
                     {
-                        int pixelIndex = Horizontal ?
-                            width * channels * yStep * i + xOffset * channels :
-                           (width * channels * yStep * i + yOffset * channels * width) % pixels.Length;
+                        int x, y;
+                        if (Horizontal)
+                        {
+                            x = xOffset;
+                            y = yStep * i;
+                        }
+                        else
+                        {
+                            x = 0;
+                            y = (yStep * i + yOffset) % image.Height;
+                        }
 
+
+                        var color = image.GetPixel(x, y);
                         strip.Pixels[i] = strip.Pixels[i].Add(Color.FromArgb(
-                            (byte)(pixels[pixelIndex + 0] * Intensity),
-                            (byte)(pixels[pixelIndex + 1] * Intensity),
-                            (byte)(pixels[pixelIndex + 2] * Intensity)));
+                            (byte)(color.R * Intensity),
+                            (byte)(color.G * Intensity),
+                            (byte)(color.B * Intensity)));
                     }
                 }
             }

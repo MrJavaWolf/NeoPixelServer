@@ -101,10 +101,10 @@ namespace NeoPixelController
                 IsEnabled = false
             });
 
-            effectController.AddEffect(effectFactory.CreateScrollEffectFromTestImage(
-                name: "Test image",
-                isEnabled: false,
-                speed: 10));
+            //effectController.AddEffect(effectFactory.CreateScrollEffectFromTestImage(
+            //    name: "Test image",
+            //    isEnabled: false,
+            //    speed: 10));
 
             effectController.AddEffect(effectFactory.CreateScrollEffectFromFile(
                 name: "Color Wheel",
