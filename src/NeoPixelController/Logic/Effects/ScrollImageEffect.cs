@@ -3,6 +3,7 @@ using NeoPixelController.Logic.Extension;
 using NeoPixelController.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 
@@ -12,10 +13,22 @@ namespace NeoPixelController.Logic.Effects
     {
 
         public Guid Id { get; private set; } = Guid.NewGuid();
+
+        [Description("The name of the effect")]
         public string Name { get; set; } = nameof(ScrollImageEffect);
+
+        [DisplayName("Enable")]
+        [Description("Enable/Disable the effect.")]
         public bool IsEnabled { get; set; } = true;
+
+        [Description("How bright the effect is (0 = off, 1 = full brightness).")]
         public float Intensity { get; set; } = 1f;
+
+        [DisplayName("Speed")]
+        [Description("How fast the effect is.")]
         public float Speed { get; set; } = 50;
+
+        [Description("Scroll horizontal (on) or vertial (off).")]
         public bool Horizontal { get; set; } = true;
 
         private readonly IEnumerable<NeoPixelDriver> drivers;

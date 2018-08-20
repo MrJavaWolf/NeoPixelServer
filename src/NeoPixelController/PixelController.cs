@@ -22,6 +22,7 @@ namespace NeoPixelController
         private TimeController timeController = new TimeController();
         private EffectFactory effectFactory;
         private ResourceLoader resourceLoader = new ResourceLoader();
+        private readonly IEnumerable<NeoPixelDriver> drivers;
 
         private readonly string[] Devices = new string[] {
             "TTYXKIYOFFPQAOFX" ,
@@ -34,13 +35,7 @@ namespace NeoPixelController
             neoPixelSender = new NeoPixelSender("192.168.0.101", 80);
             this.effectController = effectController;
 
-        }
-
-        public async Task StartAsync(CancellationToken cancellationToken)
-        {
-            IsRunning = true;
-            Startup();
-            IEnumerable<NeoPixelDriver> drivers = CreateNeoPixelDrivers(Devices, 8, 45);
+            drivers = CreateNeoPixelDrivers(Devices, 8, 45);
             effectFactory = new EffectFactory(drivers);
 
             effectController.AddEffect(effectFactory.CreateDefaultCurveEffect(
@@ -113,19 +108,24 @@ namespace NeoPixelController
                 file: resourceLoader.CreateFullFilePath("colorwheel_line.png"),
                 speed: 500));
 
+        }
 
-            bool wasPreviousBlack = false;
-            while (IsRunning)
-            {
-                ResetColor(drivers);
-                var time = await timeController.UpdateTime();
-                effectController.RunEffect(time);
-                if (!IsBlack(drivers) || !wasPreviousBlack)
-                {
-                    neoPixelSender.Send(drivers);
-                }
-                wasPreviousBlack = IsBlack(drivers);
-            }
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            //IsRunning = true;
+            //Startup();
+            //bool wasPreviousBlack = false;
+            //while (IsRunning)
+            //{
+            //    ResetColor(drivers);
+            //    var time = await timeController.UpdateTime();
+            //    effectController.RunEffect(time);
+            //    if (!IsBlack(drivers) || !wasPreviousBlack)
+            //    {
+            //        neoPixelSender.Send(drivers);
+            //    }
+            //    wasPreviousBlack = IsBlack(drivers);
+            //}
             await Task.FromResult(0);
         }
 

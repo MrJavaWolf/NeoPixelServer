@@ -42,7 +42,7 @@ namespace NeoPixelController.Logic
                 AreaStartPosition = areaStartPosition,
                 AreaLength = areaLength,
                 EffectLength = effectLength,
-                EffectSpeed = speed,
+                Speed = speed,
                 Intensity = intensity
             };
         }

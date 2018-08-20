@@ -1,0 +1,66 @@
+﻿@model NeoPixelServer.ViewModels.EditablePropertyViewModel
+@{
+    string propertyId = $"{Model.Id}-{Model.PropertyName}";
+}
+
+<div class="form-group">
+    <label for="@propertyId">@Model.DisplayName</label>
+    <small id="@propertyId-Error" class="form-text text-danger"></small>
+
+    @if (Model.Value is Boolean boolValue)
+    {
+        string isChecked = boolValue ? "checked" : "";
+        <div class="col-sm-3">
+            <input class="form-check" aria-describedby="@propertyId-Help" id="@propertyId" type="checkbox" @isChecked>
+        </div>
+    }
+    else
+    {
+        <input class="form-control" aria-describedby="@propertyId-Help" id="@propertyId" value="@Model.Value">
+    }
+
+
+    <small id="@propertyId-Help" class="form-text text-muted">@Model.Description</small>
+
+    <script>
+        $("#@propertyId").on("change paste keyup", function () {
+            console.log("On value changed: @propertyId");
+            $("#@propertyId").prop('disabled', true);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    $("#@propertyId").prop('disabled', false);
+                    if (this.status == 200) {
+                        console.log("Value updated successfully");
+                        $("#@propertyId-Error").html('');
+                    }
+                    else {
+                        var errorText = xhttp.responseText + '';
+                        console.log("Failed updating value: " + errorText);
+                        $("#@propertyId-Error").html(errorText);
+                    }
+                }
+            };
+
+            var newValue = $("#@propertyId").val();
+
+            @if (Model.Value is Boolean)
+            {
+                @:if ($("#@propertyId").is(':checked')) {
+                    @:newValue = true;
+                @:}
+                @:else {
+                    @:newValue = false;
+                @:}
+
+            }
+
+            var updateUrl = '@Context.Request.Scheme://@Context.Request.Host/pixel/UpdateProperty?id=@Model.Id&property=@Model.PropertyName&value=' + encodeURIComponent(newValue);
+            console.log("New value: " + newValue);
+            console.log("Update url: " + updateUrl);
+
+            xhttp.open("GET", updateUrl, true);
+            xhttp.send();
+        });
+    </script>
+</div>

@@ -7,9 +7,6 @@ namespace NeoPixelServer.ViewModels
 {
     public abstract class BaseViewModel
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public bool IsEnabled { get; set; }
-        public float Intensity { get; set; }
+        public List<EditablePropertyViewModel> Properties { get; set; }
     }
 }

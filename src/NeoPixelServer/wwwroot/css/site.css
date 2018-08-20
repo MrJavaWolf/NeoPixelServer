@@ -1,3 +1,10 @@
 ﻿.navbar {
     border-top: 0;
 }
+
+.form-check {
+    width: 10px;
+    position: static;
+    margin: 0 auto;
+    padding: 0;
+}

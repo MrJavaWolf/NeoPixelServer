@@ -3,6 +3,7 @@ using NeoPixelController.Interface;
 using NeoPixelController.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 
@@ -11,15 +12,35 @@ namespace NeoPixelController.Logic.Effects
     public class CurveEffect : INeoPixelEffect
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
+
+        [Description("The name of the effect")]
         public string Name { get; set; } = nameof(CurveEffect);
+
+        [DisplayName("Enable")]
+        [Description("Enable/Disable the effect.")]
         public bool IsEnabled { get; set; } = true;
+
+        [Description("How bright the effect is (0 = off, 1 = full brightness).")]
+        public float Intensity { get; set; } = 1;
+
         public IInterpolation Interpolator { get; set; }
         public IColorProvider ColorProvider { get; set; }
+
+        [DisplayName("Area Start Position")]
+        [Description("How far in the effect should start.")]
         public int AreaStartPosition { get; set; } = 0;
-        public int AreaLength { get; set; } = 40;
+
+        [DisplayName("Area Length")]
+        [Description("How long the effect area should be.")]
+        public int AreaLength { get; set; } = 45;
+
+        [DisplayName("Effect Length")]
+        [Description("How long the effect itself should be.")]
         public int EffectLength { get; set; } = 10;
-        public float EffectSpeed { get; set; } = 2;
-        public float Intensity { get; set; } = 1;
+
+        [DisplayName("Speed")]
+        [Description("How fast the effect is.")]
+        public float Speed { get; set; } = 2;
 
         private readonly IEnumerable<NeoPixelDriver> drivers;
         private float offset = 0;
@@ -64,7 +85,7 @@ namespace NeoPixelController.Logic.Effects
             }
 
             ColorProvider.Update(time);
-            offset += EffectSpeed * time.DeltaTime / 1000.0f;
+            offset += Speed * time.DeltaTime / 1000.0f;
         }
     }
 }
