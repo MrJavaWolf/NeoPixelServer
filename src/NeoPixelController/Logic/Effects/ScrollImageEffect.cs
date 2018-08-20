@@ -60,8 +60,8 @@ namespace NeoPixelController.Logic.Effects
             {
                 foreach (var strip in driver.Strips)
                 {
-                    var yStep = image.Height / strip.Pixels.Count;
-                    for (int i = 0; i < strip.Pixels.Count; i++)
+                    var yStep = image.Height / strip.Pixels.Length;
+                    for (int i = 0; i < strip.Pixels.Length; i++)
                     {
                         int x, y;
                         if (Horizontal)

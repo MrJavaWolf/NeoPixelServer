@@ -135,7 +135,7 @@ namespace NeoPixelController
             {
                 foreach (var strip in driver.Strips)
                 {
-                    for (int i = 0; i < strip.Pixels.Count; i++)
+                    for (int i = 0; i < strip.Pixels.Length; i++)
                     {
                         strip.Pixels[i] = Color.Black;
                     }
@@ -190,10 +190,13 @@ namespace NeoPixelController
                 };
                 for (int i = 0; i < stripsPerDriver; i++)
                 {
-                    var strip = new NeoPixelStrip();
+                    var strip = new NeoPixelStrip()
+                    {
+                        Pixels = new Color[pixelsPerStrip]
+                    };
                     for (int j = 0; j < pixelsPerStrip; j++)
                     {
-                        strip.Pixels.Add(Color.Black);
+                        strip.Pixels[j] = Color.Black;
                     }
                     driver.Strips.Add(strip);
                 }

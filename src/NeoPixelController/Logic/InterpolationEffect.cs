@@ -1,13 +1,13 @@
-﻿using NeoPixelController.Logic;
+﻿using MathNet.Numerics.Interpolation;
+using NeoPixelController.Logic;
+using NeoPixelController.Logic.Extension;
 using NeoPixelController.Model;
-using MathNet.Numerics.Interpolation;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NeoPixelController.Logic.Extension;
 
 namespace NeoPixelController.Logic
 {
@@ -15,41 +15,26 @@ namespace NeoPixelController.Logic
     {
         public static void Apply(
             IInterpolation interpolator,
-            NeoPixelStrip toStrip,
+            Span<Color> toPixels,
             Color color,
             float time,
             float intensity,
-            int areaStartPosition,
-            int areaLength,
             int effectLength)
         {
-            
-            var start = time % areaLength;
-
-            int startPixel = areaStartPosition + (int)start;
-            int endPixel = Math.Min(startPixel + effectLength, toStrip.Pixels.Count);
-
+            var start = Math.Abs(time) % toPixels.Length;
+            int startPixel = (int)start;
             float tStep = 1 / (float)effectLength;
-            float timeOffset;
-
-            if (time > 0) //Time is going forward
-                timeOffset = tStep * (1 - Math.Abs(start - (int)start));
-            else //Time is going backwards
-                timeOffset = tStep * (Math.Abs(start - (int)start));
+            float timeOffset = tStep * (Math.Abs(start - (int)start));
             for (int i = 0; i < effectLength; i++)
             {
                 float t = tStep * i + timeOffset;
-                if (time > 0) //Time is going forward
-                    t = 1 - t;
                 var interpolation = interpolator.Interpolate(t);
                 float colorIntensity = (float)MathUtil.Clamp(0, 1, interpolation * intensity);
 
-                int index = (startPixel + i) % areaLength;
-                if (index < areaStartPosition) index += areaStartPosition;
-
-                if (index < toStrip.Pixels.Count)
-                    toStrip.Pixels[index] =
-                        toStrip.Pixels[index].Add(
+                int index = (startPixel + i) % toPixels.Length;
+                if (index < toPixels.Length)
+                    toPixels[index] =
+                        toPixels[index].Add(
                             Color.FromArgb(
                                 (int)(color.R * colorIntensity),
                                 (int)(color.G * colorIntensity),

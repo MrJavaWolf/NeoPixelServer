@@ -9,6 +9,6 @@ namespace NeoPixelController.Model
 {
     public class NeoPixelStrip
     {
-        public List<Color> Pixels { get; set; } = new List<Color>();
+        public Color[] Pixels { get; set; }
     }
 }

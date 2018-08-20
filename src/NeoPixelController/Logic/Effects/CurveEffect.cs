@@ -2,6 +2,7 @@
 using NeoPixelController.Interface;
 using NeoPixelController.Model;
 using System;
+
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -23,9 +24,6 @@ namespace NeoPixelController.Logic.Effects
         [Description("How bright the effect is (0 = off, 1 = full brightness).")]
         public float Intensity { get; set; } = 1;
 
-        public IInterpolation Interpolator { get; set; }
-        public IColorProvider ColorProvider { get; set; }
-
         [DisplayName("Area Start Position")]
         [Description("How far in the effect should start.")]
         public int AreaStartPosition { get; set; } = 0;
@@ -38,9 +36,11 @@ namespace NeoPixelController.Logic.Effects
         [Description("How long the effect itself should be.")]
         public int EffectLength { get; set; } = 10;
 
-        [DisplayName("Speed")]
         [Description("How fast the effect is.")]
         public float Speed { get; set; } = 2;
+
+        public IInterpolation Interpolator { get; set; }
+        public IColorProvider ColorProvider { get; set; }
 
         private readonly IEnumerable<NeoPixelDriver> drivers;
         private float offset = 0;
@@ -68,19 +68,20 @@ namespace NeoPixelController.Logic.Effects
 
         public void Update(EffectTime time)
         {
+
+
             foreach (var driver in drivers)
             {
                 foreach (var strip in driver.Strips)
                 {
+                    Span<Color> effectArea = strip.Pixels.AsSpan(AreaStartPosition, AreaLength);
                     InterpolationEffect.Apply(
-                     Interpolator,
-                     strip,
-                     ColorProvider.GetColor(time),
-                     offset,
-                     Intensity,
-                     AreaStartPosition,
-                     AreaLength,
-                     EffectLength);
+                        Interpolator,
+                        effectArea,
+                        ColorProvider.GetColor(time),
+                        offset,
+                        Intensity,
+                        EffectLength);
                 }
             }
 

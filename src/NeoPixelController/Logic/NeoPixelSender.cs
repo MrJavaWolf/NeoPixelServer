@@ -85,13 +85,13 @@ namespace NeoPixelController.Logic
             {
                 foreach (var strip in driver.Strips)
                 {
-                    for (int i = 0; i < strip.Pixels.Count; i++)
+                    for (int i = 0; i < strip.Pixels.Length; i++)
                     {
                         bytes[4 + stripOffset + i * 3 + 0] = strip.Pixels[i].R;
                         bytes[4 + stripOffset + i * 3 + 1] = strip.Pixels[i].G;
                         bytes[4 + stripOffset + i * 3 + 2] = strip.Pixels[i].B;
                     }
-                    stripOffset += strip.Pixels.Count * 3;
+                    stripOffset += strip.Pixels.Length * 3;
                 }
             }
             return bytes;
@@ -104,7 +104,7 @@ namespace NeoPixelController.Logic
             {
                 foreach (var strip in driver.Strips)
                 {
-                    numberOfPixel += strip.Pixels.Count;
+                    numberOfPixel += strip.Pixels.Length;
                 }
             }
             return numberOfPixel;
