@@ -111,7 +111,7 @@ namespace NeoPixelController
             effectController.AddEffect(effectFactory.CreateColorWheelEffect(
                 name: "Color Wheel",
                 isEnabled: true,
-                speed: 1));
+                speed: 100));
 
         }
 

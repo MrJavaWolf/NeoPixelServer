@@ -20,9 +20,14 @@ namespace NeoPixelController.Logic.ColorProviders
             this.Speed = speed;
         }
 
+        public void Reset()
+        {
+            offset = 0;
+        }
+
         public Color GetColor(EffectTime time)
         {
-        
+
             //https://stackoverflow.com/questions/2288498/how-do-i-get-a-rainbow-color-gradient-in-c
             float div = (Math.Abs(offset % 1) * 6);
             int ascending = (int)((div % 1) * 255);

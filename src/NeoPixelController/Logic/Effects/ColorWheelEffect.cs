@@ -25,7 +25,7 @@ namespace NeoPixelController.Logic.Effects
         public float Intensity { get; set; } = 1;
 
         [Description("How fast the effect is.")]
-        public float Speed { get; set; } = 1;
+        public float Speed { get; set; } = 100;
 
 
 
@@ -58,6 +58,10 @@ namespace NeoPixelController.Logic.Effects
             {
                 foreach (var strip in driver.Strips)
                 {
+                    colorProvider.Reset();
+                    effectTime.DeltaTime = (long)offset;
+                    colorProvider.Update(effectTime);
+
                     float timeStep = 1.0f / strip.Pixels.Length;
                     effectTime.DeltaTime = (long)(timeStep * 1000);
                     for (int i = 0; i < strip.Pixels.Length; i++)
