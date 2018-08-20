@@ -25,7 +25,7 @@ namespace NeoPixelController.Logic.Effects
         public float Intensity { get; set; } = 1;
 
         [Description("How fast the effect is.")]
-        public float Speed { get; set; } = 2;
+        public float Speed { get; set; } = 1;
 
 
 
@@ -63,7 +63,7 @@ namespace NeoPixelController.Logic.Effects
                     for (int i = 0; i < strip.Pixels.Length; i++)
                     {
                         Color c = colorProvider.GetColor(effectTime);
-                        strip.Pixels[i].Add(Color.FromArgb(
+                        strip.Pixels[i] = strip.Pixels[i].Add(Color.FromArgb(
                             (byte)(c.R * Intensity),
                             (byte)(c.G * Intensity),
                             (byte)(c.B * Intensity)));
