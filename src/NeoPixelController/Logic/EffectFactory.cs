@@ -47,6 +47,21 @@ namespace NeoPixelController.Logic
             };
         }
 
+        public ColorWheelEffect CreateColorWheelEffect(
+            string name,
+            bool isEnabled,
+            float speed,
+            float intensity = 1)
+        {
+
+            return new ColorWheelEffect(drivers)
+            {
+                Name = name,
+                IsEnabled = isEnabled,
+                Speed = speed,
+                Intensity = intensity
+            };
+        }
 
         public ScrollImageEffect CreateScrollEffectFromFile(
             string name,
@@ -60,6 +75,7 @@ namespace NeoPixelController.Logic
             Bitmap bitmapImage = new Bitmap(image);
             return CreateScrollEffect(name, isEnabled, speed, bitmapImage, horizontalDirection, intensity);
         }
+
 
 
         //public ScrollImageEffect CreateScrollEffectFromTestImage(

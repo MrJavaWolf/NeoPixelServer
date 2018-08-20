@@ -102,30 +102,35 @@ namespace NeoPixelController
             //    speed: 10));
 
             effectController.AddEffect(effectFactory.CreateScrollEffectFromFile(
-                name: "Color Wheel",
-                isEnabled: true,
+                name: "Color Wheel From Image",
+                isEnabled: false,
                 horizontalDirection: false,
                 file: resourceLoader.CreateFullFilePath("colorwheel_line.png"),
                 speed: 500));
+
+            effectController.AddEffect(effectFactory.CreateColorWheelEffect(
+                name: "Color Wheel",
+                isEnabled: true,
+                speed: 10));
 
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            //IsRunning = true;
-            //Startup();
-            //bool wasPreviousBlack = false;
-            //while (IsRunning)
-            //{
-            //    ResetColor(drivers);
-            //    var time = await timeController.UpdateTime();
-            //    effectController.RunEffect(time);
-            //    if (!IsBlack(drivers) || !wasPreviousBlack)
-            //    {
-            //        neoPixelSender.Send(drivers);
-            //    }
-            //    wasPreviousBlack = IsBlack(drivers);
-            //}
+            IsRunning = true;
+            Startup();
+            bool wasPreviousBlack = false;
+            while (IsRunning)
+            {
+                ResetColor(drivers);
+                var time = await timeController.UpdateTime();
+                effectController.RunEffect(time);
+                if (!IsBlack(drivers) || !wasPreviousBlack)
+                {
+                    neoPixelSender.Send(drivers);
+                }
+                wasPreviousBlack = IsBlack(drivers);
+            }
             await Task.FromResult(0);
         }
 
