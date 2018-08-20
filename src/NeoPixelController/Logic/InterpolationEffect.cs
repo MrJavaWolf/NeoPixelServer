@@ -24,10 +24,10 @@ namespace NeoPixelController.Logic
             var start = Math.Abs(time) % toPixels.Length;
             int startPixel = (int)start;
             float tStep = 1 / (float)effectLength;
-            float timeOffset = tStep * (Math.Abs(start - (int)start));
+            float timeOffset = tStep * (1 - Math.Abs(start - (int)start));
             for (int i = 0; i < effectLength; i++)
             {
-                float t = tStep * i + timeOffset;
+                float t = 1 - (tStep * i + timeOffset);
                 var interpolation = interpolator.Interpolate(t);
                 float colorIntensity = (float)MathUtil.Clamp(0, 1, interpolation * intensity);
 
