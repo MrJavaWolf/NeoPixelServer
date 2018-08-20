@@ -1,0 +1,13 @@
+﻿@model NeoPixelServer.ViewModels.ColorWheelEffectViewModel
+
+<fieldset>
+
+    <div class="form-group">
+        <span class="badge badge-pill badge-secondary">Color Wheel Effect</span>
+    </div>
+    @foreach (var property in Model.Properties)
+    {
+        @await Html.PartialAsync("Effects/EditableProperty", property)
+    }
+</fieldset>
+

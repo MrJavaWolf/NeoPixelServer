@@ -7,26 +7,24 @@
 
         foreach (var effect in Model.BaseViewModels)
         {
-            if (effect is NeoPixelServer.ViewModels.CurveEffectViewModel curveEffect)
-            {
-                <div class="col-sm">
-                    <div class="card text-white  mb-3" style="min-width: 20rem; max-width: 30rem;">
-                        <div class="card-body">
+            <div class="col-sm">
+                <div class="card text-white mb-3" style="min-width: 20rem; max-width: 30rem;">
+                    <div class="card-body">
+                        @if (effect is NeoPixelServer.ViewModels.CurveEffectViewModel curveEffect)
+                        {
                             @await Html.PartialAsync("Effects/CurveEffectView", curveEffect)
-                        </div>
-                    </div>
-                </div>
-            }
-            else if (effect is NeoPixelServer.ViewModels.ScrollImageEffectViewModel scrollImageEffect)
-            {
-                <div class="col-sm">
-                    <div class="card text-white  mb-3" style="min-width: 20rem; max-width: 30rem;">
-                        <div class="card-body">
+                        }
+                        else if (effect is NeoPixelServer.ViewModels.ScrollImageEffectViewModel scrollImageEffect)
+                        {
                             @await Html.PartialAsync("Effects/ScrollImageEffectView", scrollImageEffect)
-                        </div>
+                        }
+                        else if (effect is NeoPixelServer.ViewModels.ColorWheelEffectViewModel colorWheelEffect)
+                        {
+                            @await Html.PartialAsync("Effects/ColorWheelEffectView", colorWheelEffect)
+                        }
                     </div>
                 </div>
-            }
+            </div>
         }
     }
 </div>

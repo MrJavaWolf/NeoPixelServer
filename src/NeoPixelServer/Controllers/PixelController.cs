@@ -47,19 +47,21 @@ namespace NeoPixelServer.Controllers
                 }
 
                 if (effect is CurveEffect curveEffect)
-                {
                     viewModels.Add(new CurveEffectViewModel()
                     {
                         Properties = editatableProperties
                     });
-                }
                 else if (effect is ScrollImageEffect scrollImageEffect)
-                {
                     viewModels.Add(new ScrollImageEffectViewModel()
                     {
                         Properties = editatableProperties
                     });
-                }
+                else if (effect is ColorWheelEffect colorWheelEffect)
+
+                    viewModels.Add(new ColorWheelEffectViewModel()
+                    {
+                        Properties = editatableProperties
+                    });
             }
             return View(new PixelViewModel()
             {
