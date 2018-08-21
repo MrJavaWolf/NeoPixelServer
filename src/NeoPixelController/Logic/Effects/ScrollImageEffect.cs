@@ -31,14 +31,14 @@ namespace NeoPixelController.Logic.Effects
         [Description("Scroll horizontal (on) or vertial (off).")]
         public bool Horizontal { get; set; } = true;
 
-        private readonly IEnumerable<NeoPixelDriver> drivers;
+        private readonly NeoPixelSetup neoPixelSetup;
         private readonly Bitmap image;
 
         private float offset = 0;
 
-        public ScrollImageEffect(IEnumerable<NeoPixelDriver> drivers, Bitmap image)
+        public ScrollImageEffect(NeoPixelSetup neoPixelSetup, Bitmap image)
         {
-            this.drivers = drivers;
+            this.neoPixelSetup = neoPixelSetup;
             this.image = image;
         }
 
@@ -56,7 +56,7 @@ namespace NeoPixelController.Logic.Effects
         {
             int xOffset = (int)(offset % image.Width);
             int yOffset = (int)(offset % image.Height);
-            foreach (var driver in drivers)
+            foreach (var driver in neoPixelSetup.Drivers)
             {
                 foreach (var strip in driver.Strips)
                 {

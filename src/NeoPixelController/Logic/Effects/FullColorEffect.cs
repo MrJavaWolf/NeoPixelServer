@@ -25,11 +25,11 @@ namespace NeoPixelController.Logic.Effects
 
         public IColorProvider ColorProvider { get; set; }
         
-        private readonly IEnumerable<NeoPixelDriver> drivers;
+        private readonly NeoPixelSetup neoPixelSetup;
 
-        public FullColorEffect(IEnumerable<NeoPixelDriver> drivers, IColorProvider colorProvider)
+        public FullColorEffect(NeoPixelSetup neoPixelSetup, IColorProvider colorProvider)
         {
-            this.drivers = drivers;
+            this.neoPixelSetup = neoPixelSetup;
             this.ColorProvider = colorProvider;
         }
 
@@ -42,7 +42,7 @@ namespace NeoPixelController.Logic.Effects
         {
 
             Color color = ColorProvider.GetColor(time);
-            foreach (var driver in drivers)
+            foreach (var driver in neoPixelSetup.Drivers)
             {
                 foreach (var strip in driver.Strips)
                 {

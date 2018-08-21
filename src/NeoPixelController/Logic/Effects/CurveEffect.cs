@@ -42,15 +42,15 @@ namespace NeoPixelController.Logic.Effects
         public IInterpolation Interpolator { get; set; }
         public IColorProvider ColorProvider { get; set; }
 
-        private readonly IEnumerable<NeoPixelDriver> drivers;
+        private readonly NeoPixelSetup neoPixelSetup;
         private float offset = 0;
 
         public CurveEffect(
-            IEnumerable<NeoPixelDriver> drivers,
+            NeoPixelSetup neoPixelSetup,
             IColorProvider colorProvider,
             IInterpolation interpolator)
         {
-            this.drivers = drivers;
+            this.neoPixelSetup = neoPixelSetup;
             this.ColorProvider = colorProvider;
             this.Interpolator = interpolator;
         }
@@ -68,9 +68,7 @@ namespace NeoPixelController.Logic.Effects
 
         public void Update(EffectTime time)
         {
-
-
-            foreach (var driver in drivers)
+            foreach (var driver in neoPixelSetup.Drivers)
             {
                 foreach (var strip in driver.Strips)
                 {

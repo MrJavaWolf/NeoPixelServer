@@ -22,7 +22,8 @@ namespace NeoPixelController
         private TimeController timeController = new TimeController();
         private EffectFactory effectFactory;
         private ResourceLoader resourceLoader = new ResourceLoader();
-        private readonly IEnumerable<NeoPixelDriver> drivers;
+        private NeoStripXYCoordinates coordinates;
+        private readonly NeoPixelSetup neoPixelSetup;
 
         private readonly string[] Devices = new string[] {
             "TTYXKIYOFFPQAOFX" ,
@@ -35,8 +36,9 @@ namespace NeoPixelController
             neoPixelSender = new NeoPixelSender("192.168.0.101", 80);
             this.effectController = effectController;
 
-            drivers = CreateNeoPixelDrivers(Devices, 8, 45);
-            effectFactory = new EffectFactory(drivers);
+            neoPixelSetup = NeoPixelFactory.CreateNeoPixelSetup(Devices, 8, 45);
+            coordinates = new NeoStripXYCoordinates(neoPixelSetup);
+            effectFactory = new EffectFactory(neoPixelSetup);
 
             effectController.AddEffect(effectFactory.CreateDefaultCurveEffect(
                 name: "Rainbow",
@@ -90,7 +92,7 @@ namespace NeoPixelController
                 speed: 5
                 ));
 
-            effectController.AddEffect(new FullColorEffect(drivers, new RainbowColorProvider(0.2f))
+            effectController.AddEffect(new FullColorEffect(neoPixelSetup, new RainbowColorProvider(0.2f))
             {
                 Name = "Full white",
                 IsEnabled = false
@@ -122,21 +124,21 @@ namespace NeoPixelController
             bool wasPreviousBlack = false;
             while (IsRunning)
             {
-                ResetColor(drivers);
+                ResetColor(neoPixelSetup);
                 var time = await timeController.UpdateTime();
                 effectController.RunEffect(time);
-                if (!IsBlack(drivers) || !wasPreviousBlack)
+                if (!IsBlack(neoPixelSetup) || !wasPreviousBlack)
                 {
-                    neoPixelSender.Send(drivers);
+                    neoPixelSender.Send(neoPixelSetup);
                 }
-                wasPreviousBlack = IsBlack(drivers);
+                wasPreviousBlack = IsBlack(neoPixelSetup);
             }
             await Task.FromResult(0);
         }
 
-        private void ResetColor(IEnumerable<NeoPixelDriver> drivers)
+        private void ResetColor(NeoPixelSetup neoPixelSetup)
         {
-            foreach (var driver in drivers)
+            foreach (var driver in neoPixelSetup.Drivers)
             {
                 foreach (var strip in driver.Strips)
                 {
@@ -148,9 +150,9 @@ namespace NeoPixelController
             }
         }
 
-        private bool IsBlack(IEnumerable<NeoPixelDriver> drivers)
+        private bool IsBlack(NeoPixelSetup neoPixelSetup)
         {
-            foreach (var driver in drivers)
+            foreach (var driver in neoPixelSetup.Drivers)
             {
                 foreach (var strip in driver.Strips)
                 {
@@ -179,35 +181,6 @@ namespace NeoPixelController
         {
             IsRunning = false;
             await Task.FromResult(0);
-        }
-
-        private IEnumerable<NeoPixelDriver> CreateNeoPixelDrivers(
-            IEnumerable<string> driverNames,
-            int stripsPerDriver,
-            int pixelsPerStrip)
-        {
-            List<NeoPixelDriver> drivers = new List<NeoPixelDriver>();
-            foreach (var driverName in driverNames)
-            {
-                var driver = new NeoPixelDriver()
-                {
-                    Name = driverName
-                };
-                for (int i = 0; i < stripsPerDriver; i++)
-                {
-                    var strip = new NeoPixelStrip()
-                    {
-                        Pixels = new Color[pixelsPerStrip]
-                    };
-                    for (int j = 0; j < pixelsPerStrip; j++)
-                    {
-                        strip.Pixels[j] = Color.Black;
-                    }
-                    driver.Strips.Add(strip);
-                }
-                drivers.Add(driver);
-            }
-            return drivers;
         }
     }
 }

@@ -9,6 +9,8 @@ namespace NeoPixelController.Model
 {
     public class NeoPixelStrip
     {
+        public StripPosition StripPosition { get; set; }
+        public int RowIndex { get; set; }
         public Color[] Pixels { get; set; }
     }
 }

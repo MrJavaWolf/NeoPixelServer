@@ -28,16 +28,15 @@ namespace NeoPixelController.Logic.Effects
         public float Speed { get; set; } = 100;
 
 
+        private readonly NeoPixelSetup neoPixelSetup;
 
-        private IEnumerable<NeoPixelDriver> drivers;
         private float offset = 0;
         private EffectTime effectTime = new EffectTime();
         private RainbowColorProvider colorProvider;
 
-        public ColorWheelEffect(
-            IEnumerable<NeoPixelDriver> drivers)
+        public ColorWheelEffect(NeoPixelSetup neoPixelSetup)
         {
-            this.drivers = drivers;
+            this.neoPixelSetup = neoPixelSetup;
             colorProvider = new RainbowColorProvider(1);
         }
 
@@ -54,7 +53,7 @@ namespace NeoPixelController.Logic.Effects
         public void Update(EffectTime time)
         {
 
-            foreach (var driver in drivers)
+            foreach (var driver in neoPixelSetup.Drivers)
             {
                 foreach (var strip in driver.Strips)
                 {

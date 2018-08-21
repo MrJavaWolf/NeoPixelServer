@@ -62,15 +62,15 @@ namespace NeoPixelController.Logic
             webSocket.Send(settings);
         }
 
-        public void Send(IEnumerable<NeoPixelDriver> drivers)
+        public void Send(NeoPixelSetup neoPixelSetup)
         {
-            var bytes = GetBytes(drivers);
+            var bytes = GetBytes(neoPixelSetup);
             opcStream.Write(bytes, 0, bytes.Length);
         }
 
-        private byte[] GetBytes(IEnumerable<NeoPixelDriver> drivers)
+        private byte[] GetBytes(NeoPixelSetup neoPixelSetup)
         {
-            byte[] bytes = new byte[1 + 1 + 2 + CalculateNumberOfPixels(drivers) * 3];
+            byte[] bytes = new byte[1 + 1 + 2 + CalculateNumberOfPixels(neoPixelSetup) * 3];
             bytes[0] = 0;
             bytes[1] = CommandType.Set8BitPixelColours;
 
@@ -81,7 +81,7 @@ namespace NeoPixelController.Logic
             //bytes[2] = ; - Do not set
             //bytes[3] = ; - Do not set
             int stripOffset = 0;
-            foreach (var driver in drivers)
+            foreach (var driver in neoPixelSetup.Drivers)
             {
                 foreach (var strip in driver.Strips)
                 {
@@ -97,10 +97,10 @@ namespace NeoPixelController.Logic
             return bytes;
         }
 
-        private int CalculateNumberOfPixels(IEnumerable<NeoPixelDriver> drivers)
+        private int CalculateNumberOfPixels(NeoPixelSetup neoPixelSetup)
         {
             int numberOfPixel = 0;
-            foreach (var driver in drivers)
+            foreach (var driver in neoPixelSetup.Drivers)
             {
                 foreach (var strip in driver.Strips)
                 {

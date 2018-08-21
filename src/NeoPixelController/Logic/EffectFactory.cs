@@ -11,11 +11,11 @@ namespace NeoPixelController.Logic
 {
     public class EffectFactory
     {
-        private IEnumerable<NeoPixelDriver> drivers;
+        private readonly NeoPixelSetup neoPixelSetup;
 
-        public EffectFactory(IEnumerable<NeoPixelDriver> drivers)
+        public EffectFactory(NeoPixelSetup neoPixelSetup)
         {
-            this.drivers = drivers;
+            this.neoPixelSetup = neoPixelSetup;
         }
 
         public CurveEffect CreateDefaultCurveEffect(
@@ -35,7 +35,7 @@ namespace NeoPixelController.Logic
             curve.AddPoint(1, 0, 0);
             var interpolator = CubicSpline.InterpolateHermite(curve.X.ToArray(), curve.Y.ToArray(), curve.W.ToArray());
 
-            return new CurveEffect(drivers, colorProvider, interpolator)
+            return new CurveEffect(neoPixelSetup, colorProvider, interpolator)
             {
                 Name = name,
                 IsEnabled = isEnabled,
@@ -54,7 +54,7 @@ namespace NeoPixelController.Logic
             float intensity = 1)
         {
 
-            return new ColorWheelEffect(drivers)
+            return new ColorWheelEffect(neoPixelSetup)
             {
                 Name = name,
                 IsEnabled = isEnabled,
@@ -106,7 +106,7 @@ namespace NeoPixelController.Logic
             bool horizontalDirection = true,
             float intensity = 1)
         {
-            return new ScrollImageEffect(drivers, image)
+            return new ScrollImageEffect(neoPixelSetup, image)
             {
                 Speed = speed,
                 Name = name,
