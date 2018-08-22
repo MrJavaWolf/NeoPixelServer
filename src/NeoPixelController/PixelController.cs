@@ -38,7 +38,7 @@ namespace NeoPixelController
 
             neoPixelSetup = NeoPixelFactory.CreateNeoPixelSetup(Devices, 8, 45);
             coordinates = new NeoStripXYCoordinates(neoPixelSetup);
-            effectFactory = new EffectFactory(neoPixelSetup);
+            effectFactory = new EffectFactory(neoPixelSetup, coordinates);
 
             effectController.AddEffect(effectFactory.CreateDefaultCurveEffect(
                 name: "Rainbow",
@@ -112,9 +112,14 @@ namespace NeoPixelController
 
             effectController.AddEffect(effectFactory.CreateColorWheelEffect(
                 name: "Color Wheel",
-                isEnabled: true,
+                isEnabled: false,
                 speed: 100));
 
+            effectController.AddEffect(effectFactory.CreateRainbow2DEffect(
+                name: "2D Rainbow",
+                isEnabled: true,
+                zoom: 3f,
+                speed: 100f));
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)

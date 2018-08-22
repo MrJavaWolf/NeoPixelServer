@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using NeoPixelController;
+using NeoPixelController.Logic.Effects;
+using NeoPixelServer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using NeoPixelController;
-using NeoPixelController.Logic.Effects;
-using NeoPixelServer.ViewModels;
 
 namespace NeoPixelServer.Controllers
 {
@@ -57,8 +57,12 @@ namespace NeoPixelServer.Controllers
                         Properties = editatableProperties
                     });
                 else if (effect is ColorWheelEffect colorWheelEffect)
-
                     viewModels.Add(new ColorWheelEffectViewModel()
+                    {
+                        Properties = editatableProperties
+                    });
+                else if (effect is Rainbow2DEffect rainbow2DEffect)
+                    viewModels.Add(new Rainbow2DEffectViewModel()
                     {
                         Properties = editatableProperties
                     });

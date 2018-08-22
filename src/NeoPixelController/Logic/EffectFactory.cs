@@ -12,10 +12,14 @@ namespace NeoPixelController.Logic
     public class EffectFactory
     {
         private readonly NeoPixelSetup neoPixelSetup;
+        private readonly NeoStripXYCoordinates coordinates;
 
-        public EffectFactory(NeoPixelSetup neoPixelSetup)
+        public EffectFactory(
+            NeoPixelSetup neoPixelSetup,
+            NeoStripXYCoordinates coordinates)
         {
             this.neoPixelSetup = neoPixelSetup;
+            this.coordinates = coordinates;
         }
 
         public CurveEffect CreateDefaultCurveEffect(
@@ -58,8 +62,24 @@ namespace NeoPixelController.Logic
             {
                 Name = name,
                 IsEnabled = isEnabled,
+                Intensity = intensity,
                 Speed = speed,
-                Intensity = intensity
+            };
+        }
+
+        public Rainbow2DEffect CreateRainbow2DEffect(
+            string name,
+            bool isEnabled,
+            float speed,
+            float zoom,
+            float intensity = 1)
+        {
+            return new Rainbow2DEffect(neoPixelSetup, coordinates)
+            {
+                Name = name,
+                IsEnabled = isEnabled,
+                Intensity = intensity,
+                Speed = speed,
             };
         }
 

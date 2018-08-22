@@ -22,6 +22,10 @@
                         {
                             @await Html.PartialAsync("Effects/ColorWheelEffectView", colorWheelEffect)
                         }
+                        else if(effect is NeoPixelServer.ViewModels.Rainbow2DEffectViewModel rainbow2dEffect)
+                        {
+                            @await Html.PartialAsync("Effects/Rainbow2DEffectView", rainbow2dEffect)
+                        }
                     </div>
                 </div>
             </div>

@@ -1,0 +1,12 @@
+﻿@model NeoPixelServer.ViewModels.Rainbow2DEffectViewModel
+
+<fieldset>
+    <div class="form-group">
+        <span class="badge badge-pill badge-secondary">Rainbow 2D Effect</span>
+    </div>
+    @foreach (var property in Model.Properties)
+    {
+        @await Html.PartialAsync("Effects/EditableProperty", property)
+    }
+</fieldset>
+
