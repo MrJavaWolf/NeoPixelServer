@@ -33,7 +33,7 @@ namespace NeoPixelController
 
         public PixelController(EffectController effectController)
         {
-            neoPixelSender = new NeoPixelSender("192.168.0.101", 80);
+            neoPixelSender = new NeoPixelSender("localhost", 80);
             this.effectController = effectController;
 
             neoPixelSetup = NeoPixelFactory.CreateNeoPixelSetup(Devices, 8, 45);
