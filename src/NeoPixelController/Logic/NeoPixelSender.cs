@@ -22,7 +22,7 @@ namespace NeoPixelController.Logic
 
         public void Connect()
         {
-            client = new TcpClient("192.168.0.101", port);
+            client = new TcpClient(url, port);
             opcStream = client.GetStream();
             webSocket = new WebSocket($"ws://{url}:{port}");
             webSocket.OnClose += WebSocket_OnClose;
